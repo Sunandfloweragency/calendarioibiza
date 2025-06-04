@@ -356,17 +356,37 @@
       }
       
       // Controlar el preloader
+      document.addEventListener('DOMContentLoaded', function() {
+        const preloader = document.getElementById('preloader');
+        
+        // Ocultar preloader después de un tiempo mínimo
+        setTimeout(() => {
+          if (preloader) {
+            preloader.style.opacity = '0';
+            preloader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+              preloader.style.display = 'none';
+              createParticles();
+              handleScrollAnimations();
+            }, 500);
+          }
+        }, 800); // Reducido de 1000ms a 800ms
+      });
+      
+      // Backup: ocultar después de que la ventana cargue completamente
       window.addEventListener('load', function() {
         const preloader = document.getElementById('preloader');
         setTimeout(() => {
-          preloader.style.opacity = '0';
-          preloader.style.transition = 'opacity 0.5s ease';
-          setTimeout(() => {
-            preloader.style.display = 'none';
-            createParticles();
-            handleScrollAnimations();
-          }, 500);
-        }, 1000);
+          if (preloader && preloader.style.display !== 'none') {
+            preloader.style.opacity = '0';
+            preloader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+              preloader.style.display = 'none';
+              createParticles();
+              handleScrollAnimations();
+            }, 500);
+          }
+        }, 500); // Backup más rápido
       });
     </script>
   </body>
