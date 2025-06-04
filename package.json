@@ -16,6 +16,7 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@supabase/supabase-js": "^2.49.10",
+    "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^2.30.0",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",

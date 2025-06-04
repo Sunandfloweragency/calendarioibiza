@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AuthProvider } from './contexts/AuthContext';
 import { UnifiedDataProvider } from './contexts/DataContext';
 import DataPersistence from './components/DataPersistence';
@@ -142,6 +143,7 @@ const App: React.FC = () => {
               </Suspense>
                 </main>
             </div>
+            <SpeedInsights />
           </UnifiedDataProvider>
         </AuthProvider>
       </BrowserRouter>
