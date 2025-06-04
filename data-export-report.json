@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-06-04T21:57:29.375Z",
+  "source": "Supabase",
+  "destination": "SQL File for phpMyAdmin",
+  "file": "sun-flower-ibiza-data-export.sql",
+  "tables": {
+    "clubs": 13,
+    "djs": 10,
+    "promoters": 11,
+    "events": 12
+  },
+  "total": 46
+}
