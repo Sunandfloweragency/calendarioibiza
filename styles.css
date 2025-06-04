@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Animaciones y transiciones avanzadas */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
