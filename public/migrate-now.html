@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migración Automática - Supabase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .success { background: rgba(76, 175, 80, 0.3); }
+        .error { background: rgba(244, 67, 54, 0.3); }
+        .loading { background: rgba(255, 193, 7, 0.3); }
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        .btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #e55527;
+            transform: translateY(-2px);
+        }
+        .instruction {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Migración localStorage → Supabase</h1>
+        
+        <div class="instruction">
+            <h3>📋 Instrucciones para ejecutar la migración:</h3>
+            <ol>
+                <li>Abre la consola de desarrollador (F12)</li>
+                <li>Ve a la pestaña "Console"</li>
+                <li>Copia y pega el siguiente comando:</li>
+                <pre style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; margin: 10px 0;">
+// Ejecutar migración manual
+import('/src/utils/migrateDataToSupabase.ts').then(async (module) => {
+    console.log('🚀 Iniciando migración...');
+    const result = await module.migrateDataToSupabase();
+    
+    if (result.success) {
+        console.log('✅ ¡Migración completada!');
+        console.log(`📊 Total: ${result.totalMigrated} elementos`);
+        console.log('📈 Detalles:');
+        console.log(`  - Clubs: ${result.results.clubs.success} éxito, ${result.results.clubs.failed} fallos`);
+        console.log(`  - DJs: ${result.results.djs.success} éxito, ${result.results.djs.failed} fallos`);
+        console.log(`  - Promoters: ${result.results.promoters.success} éxito, ${result.results.promoters.failed} fallos`);
+        console.log(`  - Events: ${result.results.events.success} éxito, ${result.results.events.failed} fallos`);
+        
+        const allErrors = [...result.results.clubs.errors, ...result.results.djs.errors, ...result.results.promoters.errors, ...result.results.events.errors];
+        if (allErrors.length > 0) {
+            console.log('❌ Errores:', allErrors);
+        }
+    } else {
+        console.log('❌ Migración falló');
+    }
+}).catch(error => {
+    console.error('💥 Error:', error);
+});
+                </pre>
+                <li>Presiona Enter para ejecutar</li>
+                <li>Observa los resultados en la consola</li>
+            </ol>
+        </div>
+        
+        <div id="status" class="status loading">
+            <h3>⏳ Esperando ejecución manual...</h3>
+            <p>Sigue las instrucciones de arriba para ejecutar la migración</p>
+        </div>
+        
+        <div id="logs">
+            <pre id="logOutput">🔧 Método alternativo: Ejecutar desde consola del navegador
+            
+Esto evita problemas de importación de módulos y te da control total sobre el proceso.
+
+Los datos a migrar:
+📅 7 eventos
+🏪 41 clubs  
+🎧 6 DJs
+🏢 21 promoters
+Total: 75 elementos</pre>
+        </div>
+        
+        <button id="openConsole" class="btn" onclick="alert('Presiona F12 para abrir la consola de desarrollador')">🛠️ Abrir Consola (F12)</button>
+        <button id="goToCMS" class="btn" onclick="window.location.href='/cms'">📱 Ir al CMS</button>
+        <button id="copyCommand" class="btn">📋 Copiar Comando</button>
+    </div>
+
+    <script>
+        // Función para copiar el comando al portapapeles
+        document.getElementById('copyCommand').addEventListener('click', async () => {
+            const command = `import('/src/utils/migrateDataToSupabase.ts').then(async (module) => {
+    console.log('🚀 Iniciando migración...');
+    const result = await module.migrateDataToSupabase();
+    
+    if (result.success) {
+        console.log('✅ ¡Migración completada!');
+        console.log(\`📊 Total: \${result.totalMigrated} elementos\`);
+        console.log('📈 Detalles:');
+        console.log(\`  - Clubs: \${result.results.clubs.success} éxito, \${result.results.clubs.failed} fallos\`);
+        console.log(\`  - DJs: \${result.results.djs.success} éxito, \${result.results.djs.failed} fallos\`);
+        console.log(\`  - Promoters: \${result.results.promoters.success} éxito, \${result.results.promoters.failed} fallos\`);
+        console.log(\`  - Events: \${result.results.events.success} éxito, \${result.results.events.failed} fallos\`);
+        
+        const allErrors = [...result.results.clubs.errors, ...result.results.djs.errors, ...result.results.promoters.errors, ...result.results.events.errors];
+        if (allErrors.length > 0) {
+            console.log('❌ Errores:', allErrors);
+        }
+    } else {
+        console.log('❌ Migración falló');
+    }
+}).catch(error => {
+    console.error('💥 Error:', error);
+});`;
+
+            try {
+                await navigator.clipboard.writeText(command);
+                alert('✅ Comando copiado al portapapeles! Ahora pégalo en la consola (F12)');
+            } catch (err) {
+                console.error('Error copiando al portapapeles:', err);
+                alert('❌ No se pudo copiar automáticamente. Copia manualmente el comando de arriba.');
+            }
+        });
+    </script>
+</body>
+</html> 

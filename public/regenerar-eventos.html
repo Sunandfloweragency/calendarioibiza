@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regenerar Eventos - Sun & Flower Ibiza</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #ff6b35;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #ff6b35;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+        .warning {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid #ff6b35;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .info {
+            background: rgba(53, 162, 255, 0.1);
+            border: 1px solid #35a2ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 40px;
+            font-weight: bold;
+        }
+        .event-count {
+            font-size: 1.2em;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        ul {
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #ff6b35;
+            padding-left: 10px;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 107, 53, 0.2);
+            border: 1px solid #ff6b35;
+            color: #ff6b35;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: rgba(255, 107, 53, 0.4);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">← Volver al CMS</a>
+    
+    <div class="container">
+        <h1>🔄 Regenerar Base de Eventos</h1>
+        
+        <div class="warning">
+            <h3>⚠️ Atención</h3>
+            <p>Esta herramienta eliminará todos los eventos actuales del localStorage y cargará la nueva base de datos con <strong>30+ eventos legendarios de Ibiza</strong>.</p>
+        </div>
+
+        <div class="info">
+            <h3>📊 Estado Actual</h3>
+            <div id="currentStatus">Cargando información...</div>
+        </div>
+
+        <button onclick="regenerarEventos()" id="regenerateBtn">
+            🚀 Regenerar Eventos de Ibiza
+        </button>
+
+        <button onclick="verificarEventos()" id="verifyBtn">
+            🔍 Verificar Estado
+        </button>
+
+        <button onclick="mostrarEventos()" id="showBtn">
+            📋 Mostrar Lista de Eventos
+        </button>
+
+        <div id="result" class="status"></div>
+        
+        <div class="info">
+            <h3>✨ Nuevos Eventos Incluidos</h3>
+            <p><strong>30+ eventos legendarios</strong> incluyendo:</p>
+            <ul>
+                <li><strong>David Guetta</strong> - F*** Me I'm Famous (Pacha)</li>
+                <li><strong>Solomun +1</strong> - Residencia dominical (Pacha)</li>
+                <li><strong>elrow Town</strong> - The Craziest Party (Amnesia)</li>
+                <li><strong>Martin Garrix</strong> - STMPD RCRDS (Ushuaïa)</li>
+                <li><strong>Calvin Harris</strong> - Funk Wav Bounces (Ushuaïa)</li>
+                <li><strong>Circoloco</strong> - Underground legendario (DC-10)</li>
+                <li><strong>ANTS</strong> - Colony invasion (Ushuaïa)</li>
+                <li><strong>Paradise</strong> - Jamie Jones (DC-10)</li>
+                <li><strong>Afterlife</strong> - Tale of Us (Hï Ibiza)</li>
+                <li><strong>Resistance</strong> - Ultra Worldwide (Privilege)</li>
+                <li>Y muchos más...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function verificarEventos() {
+            const eventos = localStorage.getItem('s&f_events');
+            const resultDiv = document.getElementById('result');
+            
+            if (eventos) {
+                const parsedEventos = JSON.parse(eventos);
+                resultDiv.className = 'status info';
+                resultDiv.innerHTML = `
+                    <h4>📊 Eventos encontrados: ${parsedEventos.length}</h4>
+                    <p>Estado: ${parsedEventos.length > 0 ? 'Base de datos poblada' : 'Base de datos vacía'}</p>
+                `;
+            } else {
+                resultDiv.className = 'status warning';
+                resultDiv.innerHTML = `
+                    <h4>❌ No hay eventos en localStorage</h4>
+                    <p>Es necesario regenerar la base de datos</p>
+                `;
+            }
+            actualizarEstadoActual();
+        }
+
+        function mostrarEventos() {
+            const eventos = localStorage.getItem('s&f_events');
+            const resultDiv = document.getElementById('result');
+            
+            if (eventos) {
+                const parsedEventos = JSON.parse(eventos);
+                let listHtml = '<h4>📋 Lista de Eventos Actuales:</h4><ul>';
+                
+                parsedEventos.forEach(evento => {
+                    listHtml += `<li><strong>${evento.name}</strong> - ${new Date(evento.date).toLocaleDateString('es-ES')} (${evento.eventType || 'Sin categoría'})</li>`;
+                });
+                
+                listHtml += '</ul>';
+                
+                resultDiv.className = 'status info';
+                resultDiv.innerHTML = listHtml;
+            } else {
+                resultDiv.className = 'status warning';
+                resultDiv.innerHTML = '<h4>❌ No hay eventos para mostrar</h4>';
+            }
+        }
+
+        function regenerarEventos() {
+            const resultDiv = document.getElementById('result');
+            const regenerateBtn = document.getElementById('regenerateBtn');
+            
+            // Deshabilitar botón durante el proceso
+            regenerateBtn.disabled = true;
+            regenerateBtn.textContent = '🔄 Regenerando...';
+            
+            resultDiv.className = 'status info';
+            resultDiv.innerHTML = '<h4>🔄 Limpiando base de datos anterior...</h4>';
+            
+            // Limpiar localStorage de eventos
+            localStorage.removeItem('s&f_events');
+            
+            setTimeout(() => {
+                resultDiv.innerHTML = '<h4>✅ Base de datos limpiada</h4><p>🔄 Recarga la página del calendario para cargar los nuevos eventos</p>';
+                resultDiv.className = 'status success';
+                
+                // Rehabilitar botón
+                regenerateBtn.disabled = false;
+                regenerateBtn.textContent = '🚀 Regenerar Eventos de Ibiza';
+                
+                // Actualizar estado
+                actualizarEstadoActual();
+            }, 1000);
+        }
+
+        function actualizarEstadoActual() {
+            const eventos = localStorage.getItem('s&f_events');
+            const users = localStorage.getItem('s&f_users');
+            const clubs = localStorage.getItem('s&f_clubs');
+            const djs = localStorage.getItem('s&f_djs');
+            const promoters = localStorage.getItem('s&f_promoters');
+            
+            const statusDiv = document.getElementById('currentStatus');
+            
+            let statusHtml = '<div style="text-align: left;">';
+            statusHtml += `<div>📅 Eventos: ${eventos ? JSON.parse(eventos).length : 0}</div>`;
+            statusHtml += `<div>👥 Usuarios: ${users ? JSON.parse(users).length : 0}</div>`;
+            statusHtml += `<div>🏪 Clubs: ${clubs ? JSON.parse(clubs).length : 0}</div>`;
+            statusHtml += `<div>🎧 DJs: ${djs ? JSON.parse(djs).length : 0}</div>`;
+            statusHtml += `<div>🏢 Promotores: ${promoters ? JSON.parse(promoters).length : 0}</div>`;
+            statusHtml += '</div>';
+            
+            statusDiv.innerHTML = statusHtml;
+        }
+
+        // Verificar estado al cargar la página
+        window.onload = function() {
+            verificarEventos();
+            actualizarEstadoActual();
+        };
+    </script>
+</body>
+</html> 

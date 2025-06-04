@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Sun & Flower</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 100%); 
+            color: white; 
+            margin: 0; 
+            padding: 20px;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: rgba(0,0,0,0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #ff6b35;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { color: #ff6b35; text-align: center; margin-bottom: 30px; font-size: 2.5em; }
+        h2 { color: #f7931e; border-bottom: 2px solid #ff6b35; padding-bottom: 10px; }
+        .status { 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 10px; 
+            border-left: 5px solid;
+        }
+        .status.success { background: rgba(34, 197, 94, 0.2); border-color: #22c55e; }
+        .status.error { background: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
+        .status.warning { background: rgba(251, 191, 36, 0.2); border-color: #fbbf24; }
+        .status.info { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
+        button { 
+            padding: 12px 24px; 
+            margin: 10px 5px; 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4); }
+        .link-button { 
+            display: inline-block;
+            padding: 10px 20px; 
+            background: linear-gradient(45deg, #2d1b69, #6366f1); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            margin: 5px;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        code { background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; color: #fbbf24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Diagnóstico Sun & Flower</h1>
+        
+        <div class="grid">
+            <div>
+                <h2>🔧 Estado del Sistema</h2>
+                <div id="systemStatus"></div>
+                <button onclick="checkSystem()">Verificar Sistema</button>
+            </div>
+            
+            <div>
+                <h2>👤 Estado de Autenticación</h2>
+                <div id="authStatus"></div>
+                <button onclick="checkAuth()">Verificar Auth</button>
+            </div>
+        </div>
+        
+        <h2>🚀 Acciones Rápidas</h2>
+        <div style="text-align: center;">
+            <button onclick="setupAdmin()">👑 Configurar Admin</button>
+            <button onclick="testLogin()">🔐 Test Login</button>
+            <button onclick="clearAndReset()">🗑️ Reset Total</button>
+            <a href="/admin-setup.html" class="link-button">🔧 Setup Completo</a>
+            <a href="/login" class="link-button">🔑 Ir a Login</a>
+            <a href="/admin/dashboard" class="link-button">📊 Admin Dashboard</a>
+        </div>
+        
+        <h2>📋 URLs de Acceso</h2>
+        <div class="status info">
+            <strong>🌐 URLs principales:</strong><br>
+            • Aplicación: <code>http://localhost:5173/</code><br>
+            • Login: <code>http://localhost:5173/login</code><br>
+            • Admin Dashboard: <code>http://localhost:5173/admin/dashboard</code><br>
+            • Setup Admin: <code>http://localhost:5173/admin-setup.html</code><br>
+            • Diagnóstico: <code>http://localhost:5173/diagnostico.html</code>
+        </div>
+        
+        <h2>🔑 Credenciales</h2>
+        <div class="status success">
+            <strong>👤 Usuario Admin:</strong> <code>AdminBassse</code><br>
+            <strong>🔐 Contraseña:</strong> <code>admin123</code><br>
+            <strong>👑 Rol:</strong> <code>admin</code>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function checkSystem() {
+            const results = document.getElementById('systemStatus');
+            let html = '';
+            
+            // Verificar localStorage
+            const users = localStorage.getItem('s&f_users');
+            const currentUser = localStorage.getItem('s&f_currentUser');
+            
+            if (users) {
+                const parsedUsers = JSON.parse(users);
+                const adminUser = parsedUsers.find(u => u.username === 'AdminBassse');
+                
+                if (adminUser) {
+                    html += '<div class="status success">✅ Usuario AdminBassse encontrado</div>';
+                } else {
+                    html += '<div class="status error">❌ Usuario AdminBassse NO encontrado</div>';
+                }
+            } else {
+                html += '<div class="status error">❌ No hay usuarios en localStorage</div>';
+            }
+            
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                html += `<div class="status success">✅ Usuario logueado: ${user.username} (${user.role})</div>`;
+            } else {
+                html += '<div class="status warning">⚠️ No hay usuario logueado</div>';
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        function checkAuth() {
+            const authResults = document.getElementById('authStatus');
+            const currentUser = localStorage.getItem('s&f_currentUser');
+            
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                authResults.innerHTML = `
+                    <div class="status success">
+                        ✅ <strong>Usuario Activo:</strong><br>
+                        👤 Username: ${user.username}<br>
+                        👑 Rol: ${user.role}<br>
+                        📧 Email: ${user.email}
+                    </div>
+                `;
+            } else {
+                authResults.innerHTML = '<div class="status warning">⚠️ No hay usuario logueado. Necesitas hacer login.</div>';
+            }
+        }
+        
+        function setupAdmin() {
+            const adminUser = {
+                id: '00000000-0000-0000-0000-000000000000',
+                username: 'AdminBassse',
+                email: 'admin@sunflower.ibiza',
+                passwordHash: 'admin123',
+                role: 'admin',
+                isBanned: false,
+                registrationDate: new Date().toISOString(),
+                acceptedTermsDate: new Date().toISOString(),
+                name: 'Admin Bassse',
+                country: 'Spain',
+                preferredStyles: ['All'],
+                userProfileType: 'promoter'
+            };
+
+            const users = [adminUser];
+            localStorage.setItem('s&f_users', JSON.stringify(users));
+            
+            document.getElementById('results').innerHTML = '<div class="status success">✅ Usuario AdminBassse creado exitosamente!</div>';
+            checkSystem();
+        }
+        
+        function testLogin() {
+            const users = localStorage.getItem('s&f_users');
+            if (!users) {
+                document.getElementById('results').innerHTML = '<div class="status error">❌ No hay usuarios. Crea el admin primero.</div>';
+                return;
+            }
+            
+            const parsedUsers = JSON.parse(users);
+            const user = parsedUsers.find(u => u.username === 'AdminBassse');
+            
+            if (user) {
+                localStorage.setItem('s&f_currentUser', JSON.stringify(user));
+                document.getElementById('results').innerHTML = '<div class="status success">✅ Login de prueba exitoso! Ahora puedes ir al Admin Dashboard.</div>';
+                checkAuth();
+            } else {
+                document.getElementById('results').innerHTML = '<div class="status error">❌ Usuario AdminBassse no encontrado.</div>';
+            }
+        }
+        
+        function clearAndReset() {
+            localStorage.clear();
+            document.getElementById('results').innerHTML = '<div class="status warning">🗑️ Sistema limpiado. Crea el admin nuevamente.</div>';
+            document.getElementById('systemStatus').innerHTML = '';
+            document.getElementById('authStatus').innerHTML = '';
+        }
+        
+        // Auto-check al cargar
+        window.onload = function() {
+            checkSystem();
+            checkAuth();
+        }
+    </script>
+</body>
+</html> 

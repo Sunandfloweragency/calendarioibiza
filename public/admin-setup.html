@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración Admin - Sun & Flower</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b69 100%); 
+            color: white; 
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #ff6b35;
+        }
+        h1 { color: #ff6b35; text-align: center; margin-bottom: 30px; }
+        button { 
+            padding: 12px 24px; 
+            margin: 10px; 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        .result { 
+            background: rgba(45, 27, 105, 0.3); 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 8px; 
+            border-left: 4px solid #ff6b35;
+        }
+        input { 
+            padding: 12px; 
+            margin: 5px; 
+            width: 200px; 
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #ff6b35;
+            border-radius: 5px;
+            color: white;
+        }
+        .success { color: #4ade80; }
+        .error { color: #ef4444; }
+        .info { color: #3b82f6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Configuración Admin - AdminBassse</h1>
+        
+        <div class="result">
+            <h3>1. Limpiar Sistema</h3>
+            <button onclick="clearAll()">🗑️ Limpiar localStorage</button>
+            <div id="clearResult"></div>
+        </div>
+
+        <div class="result">
+            <h3>2. Crear Admin AdminBassse</h3>
+            <button onclick="createAdminBassse()">👑 Crear AdminBassse</button>
+            <div id="adminResult"></div>
+        </div>
+
+        <div class="result">
+            <h3>3. Verificar Configuración</h3>
+            <button onclick="checkData()">🔍 Verificar Datos</button>
+            <div id="checkResult"></div>
+        </div>
+
+        <div class="result">
+            <h3>4. Test Login AdminBassse</h3>
+            <input type="text" id="testUser" placeholder="AdminBassse" value="AdminBassse">
+            <input type="password" id="testPass" placeholder="admin123" value="admin123">
+            <button onclick="testLogin()">🔐 Test Login</button>
+            <div id="loginResult"></div>
+        </div>
+
+        <div class="result">
+            <h3>5. Ir a la Aplicación</h3>
+            <button onclick="goToApp()">🚀 Ir a Sun & Flower</button>
+            <button onclick="goToLogin()">🔑 Ir a Login</button>
+        </div>
+    </div>
+
+    <script>
+        function clearAll() {
+            localStorage.clear();
+            document.getElementById('clearResult').innerHTML = '<span class="success">✅ localStorage limpiado completamente</span>';
+        }
+
+        function createAdminBassse() {
+            const adminUser = {
+                id: '00000000-0000-0000-0000-000000000000',
+                username: 'AdminBassse',
+                email: 'admin@sunflower.ibiza',
+                passwordHash: 'admin123',
+                role: 'admin',
+                isBanned: false,
+                registrationDate: new Date().toISOString(),
+                acceptedTermsDate: new Date().toISOString(),
+                name: 'Admin Bassse',
+                country: 'Spain',
+                preferredStyles: ['All'],
+                userProfileType: 'promoter'
+            };
+
+            const users = [adminUser];
+            localStorage.setItem('s&f_users', JSON.stringify(users));
+            
+            document.getElementById('adminResult').innerHTML = `
+                <span class="success">✅ Usuario AdminBassse creado exitosamente!</span><br>
+                <span class="info">👤 Username: AdminBassse</span><br>
+                <span class="info">🔑 Password: admin123</span><br>
+                <span class="info">👑 Role: admin</span>
+            `;
+        }
+
+        function checkData() {
+            const users = localStorage.getItem('s&f_users');
+            const currentUser = localStorage.getItem('s&f_currentUser');
+            
+            let result = '<strong class="info">📊 Estado del Sistema:</strong><br>';
+            result += 'Users: ' + (users ? '<span class="success">✅ Encontrado (' + JSON.parse(users).length + ' usuarios)</span>' : '<span class="error">❌ No encontrado</span>') + '<br>';
+            result += 'CurrentUser: ' + (currentUser ? '<span class="success">✅ Usuario logueado</span>' : '<span class="info">ℹ️ No hay usuario logueado</span>') + '<br>';
+            
+            if (users) {
+                const parsedUsers = JSON.parse(users);
+                result += '<br><strong class="info">👥 Usuarios en el sistema:</strong><br>';
+                parsedUsers.forEach(user => {
+                    result += `<span class="success">- ${user.username} (${user.role})</span><br>`;
+                });
+            }
+            
+            document.getElementById('checkResult').innerHTML = result;
+        }
+
+        function testLogin() {
+            const username = document.getElementById('testUser').value;
+            const password = document.getElementById('testPass').value;
+            
+            const users = localStorage.getItem('s&f_users');
+            if (!users) {
+                document.getElementById('loginResult').innerHTML = '<span class="error">❌ No hay usuarios en localStorage. Crea el admin primero.</span>';
+                return;
+            }
+            
+            const parsedUsers = JSON.parse(users);
+            const user = parsedUsers.find(u => u.username.toLowerCase() === username.toLowerCase());
+            
+            if (!user) {
+                document.getElementById('loginResult').innerHTML = '<span class="error">❌ Usuario no encontrado. Verifica que sea "AdminBassse"</span>';
+                return;
+            }
+            
+            if (user.passwordHash === password) {
+                localStorage.setItem('s&f_currentUser', JSON.stringify(user));
+                document.getElementById('loginResult').innerHTML = '<span class="success">✅ Login exitoso! AdminBassse está logueado.</span>';
+            } else {
+                document.getElementById('loginResult').innerHTML = `<span class="error">❌ Contraseña incorrecta.</span><br><span class="info">Esperaba: "${user.passwordHash}", recibió: "${password}"</span>`;
+            }
+        }
+
+        function goToApp() {
+            window.location.href = '/';
+        }
+
+        function goToLogin() {
+            window.location.href = '/login';
+        }
+
+        // Auto-verificar al cargar la página
+        window.onload = function() {
+            checkData();
+        }
+    </script>
+</body>
+</html> 
