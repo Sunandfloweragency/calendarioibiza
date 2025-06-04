@@ -1,7 +1,7 @@
 {
   "name": "ibiza-calendar-sunandflower",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,8 @@
     "build:subdomain": "BASE_PATH='/calendar' vite build --mode production",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist && rm -rf node_modules/.vite"
+    "clean": "rm -rf dist && rm -rf node_modules/.vite",
+    "deploy": "npm run build && vercel --prod"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
