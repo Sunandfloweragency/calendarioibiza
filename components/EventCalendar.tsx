@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarEvent, FilterOptions } from '../types';
 import { useData } from '../contexts/DataContext';
@@ -18,7 +18,7 @@ interface EventCalendarProps {
 }
 
 const EventCalendar: React.FC<EventCalendarProps> = ({ initialFilters: _initialFilters }) => {
-  const { getIbizaEvents, clubs, djs, loading } = useData();
+  const { events, clubs, djs, loading } = useData();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [mobileViewMode, setMobileViewMode] = useState<'list' | 'calendar'>('list');
   const [hoveredEvent, setHoveredEvent] = useState<CalendarEvent | null>(null);
@@ -32,20 +32,21 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ initialFilters: _initialF
     6: 'Julio', 7: 'Agosto', 8: 'Septiembre', 9: 'Octubre', 10: 'Noviembre', 11: 'Diciembre'
   };
 
-  // Transformar eventos de Ibiza para el calendario
-  const calendarEvents = useMemo((): CalendarEvent[] => {
-    return getIbizaEvents()
-      .map((event: Event) => ({
+  // Memoizar eventos del calendario
+  const calendarEvents = useMemo(() => {
+    return events
+      .filter((event: any) => event.status === 'approved')
+      .map((event: any) => ({
         id: event.id,
         title: event.name,
-        start: new Date(event.date),
+        start: new Date(`${event.date}T${event.time || '00:00'}`),
         slug: event.slug,
         imageUrl: event.imageUrl,
-        clubName: event.clubId ? clubs.find((c: Club) => c.id === event.clubId)?.name : undefined,
-        djName: event.djIds && event.djIds.length > 0 ? djs.filter((dj: DJ) => event.djIds!.includes(dj.id)).map((dj: DJ) => dj.name).join(', ') : undefined,
-        category: event.eventType || 'Party'
+        clubName: clubs.find((club: any) => club.id === event.clubId)?.name,
+        djName: djs.find((dj: any) => event.djIds?.includes(dj.id))?.name,
+        category: event.eventType || 'event'
       }));
-  }, [getIbizaEvents, clubs, djs]);
+  }, [events, clubs, djs]);
 
   // Eventos filtrados y ordenados para la lista (solo eventos de Ibiza)
   const sortedEvents = useMemo(() => {
@@ -256,7 +257,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ initialFilters: _initialF
         {sortedEvents.length > 0 ? (
           <div className="space-y-4 max-h-96 lg:max-h-[600px] overflow-y-auto custom-scrollbar">
             {sortedEvents.slice(0, 10).map((event: CalendarEvent) => {
-              const originalEvent = getIbizaEvents().find((e: Event) => e.id === event.id);
+              const originalEvent = events.find((e: Event) => e.id === event.id);
               if (!originalEvent) return null;
 
               return (
@@ -380,7 +381,7 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ initialFilters: _initialF
           <h3 className="text-xl font-bold text-gradient mb-4">Próximos Eventos</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-h-64 overflow-y-auto custom-scrollbar">
             {sortedEvents.slice(0, 8).map((event: CalendarEvent) => {
-              const originalEvent = getIbizaEvents().find((e: Event) => e.id === event.id);
+              const originalEvent = events.find((e: Event) => e.id === event.id);
               if (!originalEvent) return null;
 
               return (

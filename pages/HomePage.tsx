@@ -20,24 +20,23 @@ import {
 } from '@heroicons/react/24/outline';
 
 const HomePage: React.FC = () => {
-  const { events, loading, connectionStatus, getIbizaEvents } = useData();
+  const { events, loading } = useData();
   
-  // Device detection optimizada
-  const isMobile = useBreakpoint('md');
-  const [currentView, setCurrentView] = useState<'events' | 'calendar'>('events');
+  // Estado del dispositivo y vista
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [currentView, setCurrentView] = useState<'events' | 'calendar'>(window.innerWidth < 768 ? 'events' : 'calendar');
   
   // Ref para evitar spam de logs
   const hasLoggedDataRef = useRef<string>('');
 
-  // Obtener eventos próximos usando directamente getIbizaEvents
+  // Obtener eventos próximos usando directamente events
   const upcomingEvents = useMemo(() => {
-    const ibizaEvents = getIbizaEvents();
     const now = new Date();
-    return ibizaEvents
-      .filter(event => new Date(event.date) >= now)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    return events
+      .filter((event: any) => new Date(event.date) >= now)
+      .sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .slice(0, 12); // Máximo 12 para mejor rendimiento
-  }, [getIbizaEvents]);
+  }, [events]);
 
   // Detectar tamaño de pantalla y ajustar vista automáticamente
   useEffect(() => {
@@ -53,12 +52,11 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (process.env.NODE_ENV === 'development' && !loading && upcomingEvents.length > 0) {
       // Solo loggear una vez cuando los datos están listos
-      const logKey = `homepage-${upcomingEvents.length}-${connectionStatus}`;
+      const logKey = `homepage-${upcomingEvents.length}`;
       if (hasLoggedDataRef.current !== logKey) {
         console.log('🏠 HomePage - Datos cargados:', {
           events: upcomingEvents.length,
           loading,
-          connectionStatus,
           isMobile,
           currentView,
           timestamp: new Date().toISOString()
@@ -66,7 +64,7 @@ const HomePage: React.FC = () => {
         hasLoggedDataRef.current = logKey;
       }
     }
-  }, [loading, upcomingEvents.length, connectionStatus]); // Removido isMobile y currentView que cambian mucho
+  }, [loading, upcomingEvents.length]); // Removido connectionStatus
 
   // Vista change handler memoizado (con validación responsive)
   const handleViewChange = useCallback((view: 'events' | 'calendar') => {
@@ -234,16 +232,6 @@ const HomePage: React.FC = () => {
       {/* Sección de contenido principal */}
       <section className="relative min-h-screen py-8 md:py-12 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Indicador de estado de conexión */}
-          {connectionStatus !== 'supabase' && (
-            <div className="mb-8 text-center">
-              <div className="inline-flex items-center px-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
-                Modo local - Datos de demostración
-              </div>
-            </div>
-          )}
-
           {/* Vista de eventos (siempre en móvil, opcional en desktop) */}
           {(isMobile || currentView === 'events') && (
             <div className="animate-fade-in">

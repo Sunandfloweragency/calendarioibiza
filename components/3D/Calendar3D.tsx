@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { useData } from '../../contexts/DataContext';
 import { ChevronLeftIcon, ChevronRightIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import HolographicCard from './HolographicCard';
@@ -8,10 +8,12 @@ import type { Event, Club, DJ } from '../../types/supabase';
 
 interface Calendar3DProps {
   onEventSelect?: (eventId: string) => void;
+  className?: string;
+  showFilters?: boolean;
 }
 
-const Calendar3D: React.FC<Calendar3DProps> = ({ onEventSelect }) => {
-  const { getIbizaEvents, clubs, djs } = useData();
+const Calendar3D: React.FC<Calendar3DProps> = ({ onEventSelect, className = '', showFilters = true }) => {
+  const { events, clubs, djs } = useData();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [hoveredDay, setHoveredDay] = useState<number | null>(null);
@@ -30,24 +32,26 @@ const Calendar3D: React.FC<Calendar3DProps> = ({ onEventSelect }) => {
 
   // Obtener eventos del mes actual
   const monthEvents = useMemo(() => {
-    const events = getIbizaEvents();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    
-    return events.filter((event: Event) => {
+    return events.filter((event: any) => {
       const eventDate = new Date(event.date);
-      return eventDate.getFullYear() === year && eventDate.getMonth() === month;
+      return eventDate.getMonth() === currentDate.getMonth() && 
+             eventDate.getFullYear() === currentDate.getFullYear();
     });
-  }, [getIbizaEvents, currentDate]);
+  }, [events, currentDate]);
+
+  // Obtener todos los eventos para análisis general
+  const allEvents = useMemo(() => {
+    return events;
+  }, [events]);
 
   // Obtener todos los eventos próximos para la lista lateral
   const upcomingEvents = useMemo(() => {
-    const events = getIbizaEvents();
+    const events = allEvents;
     return events
       .filter((event: Event) => new Date(event.date) >= new Date())
       .sort((a: Event, b: Event) => new Date(a.date).getTime() - new Date(b.date).getTime())
       .slice(0, 15); // Límite para la lista lateral
-  }, [getIbizaEvents]);
+  }, [allEvents]);
 
   // Generar días del mes
   const generateCalendarDays = () => {

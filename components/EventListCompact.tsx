@@ -12,11 +12,16 @@ import type { Event, Club, DJ } from '../types/supabase';
 
 interface EventListCompactProps {
   maxEvents?: number;
+  showImages?: boolean;
+  className?: string;
 }
 
-const EventListCompact: React.FC<EventListCompactProps> = ({ maxEvents = 20 }) => {
-  const { getIbizaEvents, clubs, djs } = useData();
-  const events = getIbizaEvents();
+const EventListCompact: React.FC<EventListCompactProps> = ({ 
+  maxEvents = 6, 
+  showImages = true, 
+  className = '' 
+}) => {
+  const { events, clubs, djs } = useData();
 
   // Filtrar eventos futuros y ordenar por fecha
   const upcomingEvents = events
