@@ -57,7 +57,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)] animate-fade-in py-10">
-      <div className="bg-brand-surface p-8 rounded-xl shadow-2xl w-full max-w-md border border-brand-gold/20">
+      <div className="bg-brand-surface p-8 rounded-xl shadow-main-card-hover w-full max-w-md">
         <h1 className="text-3xl font-headings font-bold text-brand-orange text-center mb-8">
           {username.toLowerCase() === ADMIN_USERNAME.toLowerCase() ? t('login.adminTitle') : t('login.title')}
         </h1>
