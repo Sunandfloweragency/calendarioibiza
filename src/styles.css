@@ -603,4 +603,76 @@
 
 .scale-105 {
   transform: scale(1.05);
+}
+
+/* Efectos especiales para eventos */
+.event-card-hover {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.event-card-hover:hover {
+  transform: scale(1.02) translateY(-8px);
+  box-shadow: 0 20px 40px rgba(221, 169, 93, 0.3), 0 0 0 1px rgba(255, 144, 0, 0.2);
+}
+
+.event-badge-glow {
+  box-shadow: 0 4px 20px rgba(255, 144, 0, 0.4);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { 
+    box-shadow: 0 4px 20px rgba(255, 144, 0, 0.4);
+  }
+  50% { 
+    box-shadow: 0 8px 30px rgba(255, 144, 0, 0.7);
+  }
+}
+
+.event-title-effect {
+  transition: all 0.5s ease;
+  background: linear-gradient(135deg, #fff, #fff);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.event-title-effect:hover {
+  background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(221, 169, 93, 0.5);
+}
+
+/* Efectos de partículas para eventos especiales */
+.today-event {
+  position: relative;
+  overflow: hidden;
+}
+
+.today-event::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(221, 169, 93, 0.1) 0%, transparent 70%);
+  animation: rotate-glow 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotate-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.event-info-pill {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.event-info-pill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 } 

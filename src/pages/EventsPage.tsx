@@ -10,7 +10,10 @@ import {
   CalendarDaysIcon, 
   ListBulletIcon,
   SparklesIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
+  ClockIcon,
+  MapPinIcon,
+  MusicalNoteIcon
 } from '@heroicons/react/24/outline';
 
 const EventsPage: React.FC = () => {
@@ -213,89 +216,144 @@ const EventsPage: React.FC = () => {
               ))}
             </div>
           ) : (
-            /* Vista de lista optimizada para móvil */
-            <div className="space-y-4">
+            /* Vista de lista espectacular */
+            <div className="space-y-6">
               {filteredEvents.map((event, index) => {
                 const club = event.clubId ? clubs.find(c => c.id === event.clubId) : null;
                 const eventDJs = event.djIds ? djs.filter(dj => event.djIds!.includes(dj.id)) : [];
                 const eventDate = new Date(event.date);
+                const isToday = eventDate.toDateString() === new Date().toDateString();
+                const isTomorrow = eventDate.toDateString() === new Date(Date.now() + 86400000).toDateString();
 
                 return (
                   <Link
                     key={event.id}
                     to={`/events/${event.slug}`}
                     className="block group animate-fade-in"
-                    style={{ animationDelay: `${index * 0.05}s` }}
+                    style={{ animationDelay: `${index * 0.1}s` }}
                   >
-                    <div className="bg-gradient-to-br from-brand-surface/50 to-brand-surface-variant/50 backdrop-blur-md rounded-2xl border border-brand-orange/20 p-6 hover:border-brand-orange/40 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-start gap-4">
-                        {/* Fecha destacada */}
-                        <div className="bg-gradient-to-br from-brand-orange to-brand-gold rounded-xl p-3 text-center flex-shrink-0">
-                          <div className="text-xs font-bold text-brand-white opacity-90">
-                            {eventDate.toLocaleDateString('es-ES', { weekday: 'short' }).toUpperCase()}
-                          </div>
-                          <div className="text-2xl font-black text-brand-white leading-none">
-                            {eventDate.getDate()}
-                          </div>
-                          <div className="text-xs font-bold text-brand-white opacity-90">
-                            {eventDate.toLocaleDateString('es-ES', { month: 'short' }).toUpperCase()}
+                    <div className={`relative bg-gradient-to-br from-brand-surface/60 to-brand-surface-variant/60 backdrop-blur-md rounded-3xl border-2 p-8 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] hover:-translate-y-2 ${
+                      isToday ? 'border-brand-gold shadow-2xl shadow-brand-gold/30 animate-pulse' : 
+                      isTomorrow ? 'border-brand-orange shadow-xl shadow-brand-orange/20' : 
+                      'border-brand-orange/30 hover:border-brand-orange/60'
+                    }`}>
+                      
+                      {/* Efectos de fondo */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-brand-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-brand-gold/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-3xl"></div>
+                      
+                      {/* Badge especial para eventos de hoy/mañana */}
+                      {isToday && (
+                        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-brand-gold to-brand-orange text-brand-white text-sm px-4 py-2 rounded-full font-black shadow-lg animate-bounce border-2 border-brand-white/20">
+                          🔥 HOY 🔥
+                        </div>
+                      )}
+                      {isTomorrow && !isToday && (
+                        <div className="absolute -top-3 -right-3 bg-gradient-to-r from-brand-orange to-brand-purple text-brand-white text-sm px-4 py-2 rounded-full font-black shadow-lg animate-pulse border-2 border-brand-white/20">
+                          ⭐ MAÑANA ⭐
+                        </div>
+                      )}
+
+                      <div className="relative flex items-start gap-6">
+                        {/* Fecha destacada mejorada */}
+                        <div className="flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                          <div className="bg-gradient-to-br from-brand-orange via-brand-gold to-brand-purple rounded-2xl p-5 text-center shadow-2xl border-2 border-brand-white/20 relative overflow-hidden">
+                            {/* Efecto brillante */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            <div className="relative">
+                              <div className="text-xs font-black text-brand-white opacity-90 mb-1">
+                                {eventDate.toLocaleDateString('es-ES', { weekday: 'short' }).toUpperCase()}
+                              </div>
+                              <div className="text-3xl font-black text-brand-white leading-none mb-1">
+                                {eventDate.getDate()}
+                              </div>
+                              <div className="text-xs font-black text-brand-white opacity-90">
+                                {eventDate.toLocaleDateString('es-ES', { month: 'short' }).toUpperCase()}
+                              </div>
+                            </div>
                           </div>
                         </div>
 
-                        {/* Imagen del evento */}
-                        {event.imageUrl && (
-                          <img
-                            src={event.imageUrl}
-                            alt={event.name}
-                            className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300"
-                          />
-                        )}
+                        {/* Imagen del evento mejorada */}
+                        <div className="flex-shrink-0 relative transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                          {event.imageUrl ? (
+                            <div className="relative">
+                              <img
+                                src={event.imageUrl}
+                                alt={event.name}
+                                className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-2xl shadow-xl border-2 border-brand-orange/30"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 via-transparent to-brand-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                            </div>
+                          ) : (
+                            <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-brand-orange/40 to-brand-gold/40 rounded-2xl shadow-xl border-2 border-brand-orange/30 flex items-center justify-center">
+                              <MusicalNoteIcon className="w-12 h-12 text-brand-white" />
+                            </div>
+                          )}
+                        </div>
 
-                        {/* Información del evento */}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-black text-brand-white text-lg md:text-xl mb-3 text-with-gradient-glow transition-all duration-300 leading-tight">
+                        {/* Información del evento mejorada */}
+                        <div className="flex-1 min-w-0 relative">
+                          <h3 className="font-black text-brand-white text-2xl md:text-3xl mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-brand-gold group-hover:via-brand-orange group-hover:to-brand-purple group-hover:bg-clip-text transition-all duration-500 leading-tight">
                             {event.name}
                           </h3>
                           
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-3 text-sm text-brand-white/90">
-                              <span className="w-2 h-2 rounded-full bg-brand-orange inline-block flex-shrink-0"></span>
-                              <span className="font-medium">{formatDate(eventDate)}</span>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Información básica */}
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-3 bg-brand-black/30 backdrop-blur-sm rounded-full px-4 py-2">
+                                <div className="w-6 h-6 bg-gradient-to-r from-brand-orange to-brand-gold rounded-full flex items-center justify-center">
+                                  <ClockIcon className="w-4 h-4 text-brand-white" />
+                                </div>
+                                <span className="font-bold text-brand-white">{formatDate(eventDate)}</span>
+                              </div>
+                              
+                              {club && (
+                                <div className="flex items-center gap-3 bg-brand-black/30 backdrop-blur-sm rounded-full px-4 py-2">
+                                  <div className="w-6 h-6 bg-gradient-to-r from-brand-purple to-brand-orange rounded-full flex items-center justify-center">
+                                    <MapPinIcon className="w-4 h-4 text-brand-white" />
+                                  </div>
+                                  <span className="font-bold text-brand-white">{club.name}</span>
+                                </div>
+                              )}
                             </div>
-                            
-                            {club && (
-                              <div className="flex items-center gap-3 text-sm text-brand-white/90">
-                                <span className="w-2 h-2 rounded-full bg-brand-purple inline-block flex-shrink-0"></span>
-                                <span className="font-medium">{club.name}</span>
-                              </div>
-                            )}
-                            
-                            {eventDJs.length > 0 && (
-                              <div className="flex items-center gap-3 text-sm text-brand-white/90">
-                                <span className="w-2 h-2 rounded-full bg-brand-gold inline-block flex-shrink-0"></span>
-                                <span className="font-medium">
-                                  {eventDJs.slice(0, 3).map(dj => dj.name).join(', ')}
-                                  {eventDJs.length > 3 && ` +${eventDJs.length - 3} más`}
-                                </span>
-                              </div>
-                            )}
 
-                            {event.price && (
-                              <div className="flex items-center gap-3 text-sm">
-                                <span className="w-2 h-2 rounded-full bg-brand-orange inline-block flex-shrink-0"></span>
-                                <span className="font-bold text-brand-orange">{event.price}</span>
-                              </div>
-                            )}
+                            {/* Información adicional */}
+                            <div className="space-y-3">
+                              {eventDJs.length > 0 && (
+                                <div className="flex items-center gap-3 bg-brand-black/30 backdrop-blur-sm rounded-full px-4 py-2">
+                                  <div className="w-6 h-6 bg-gradient-to-r from-brand-gold to-brand-purple rounded-full flex items-center justify-center">
+                                    <MusicalNoteIcon className="w-4 h-4 text-brand-white" />
+                                  </div>
+                                  <span className="font-bold text-brand-white truncate">
+                                    {eventDJs.slice(0, 2).map(dj => dj.name).join(', ')}
+                                    {eventDJs.length > 2 && ` +${eventDJs.length - 2} más`}
+                                  </span>
+                                </div>
+                              )}
+
+                              {event.price && (
+                                <div className="flex items-center gap-3 bg-brand-black/30 backdrop-blur-sm rounded-full px-4 py-2">
+                                  <div className="w-6 h-6 bg-gradient-to-r from-brand-green to-brand-gold rounded-full flex items-center justify-center">
+                                    <span className="text-brand-white text-xs font-black">€</span>
+                                  </div>
+                                  <span className="font-black text-brand-orange">{event.price}</span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
 
-                        {/* Flecha indicadora */}
+                        {/* Flecha indicadora mejorada */}
                         <div className="flex-shrink-0 self-center">
-                          <div className="w-8 h-8 rounded-full bg-brand-orange/20 flex items-center justify-center group-hover:bg-brand-orange/40 transition-colors duration-300">
-                            <span className="text-brand-orange font-bold">→</span>
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-brand-orange/30 to-brand-gold/30 flex items-center justify-center group-hover:from-brand-orange group-hover:to-brand-gold transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-12 border-2 border-brand-white/20">
+                            <span className="text-2xl font-black text-brand-white group-hover:animate-bounce">→</span>
                           </div>
                         </div>
                       </div>
+
+                      {/* Efectos adicionales */}
+                      <div className="absolute inset-0 border-2 border-transparent group-hover:border-brand-gold/40 rounded-3xl transition-all duration-500 pointer-events-none"></div>
                     </div>
                   </Link>
                 );
