@@ -27,6 +27,7 @@ import AdminPromoterManagementPage from './pages/AdminPromoterManagementPage';
 import AdminEventManagementPage from './pages/AdminEventManagementPage';
 import AdminClubManagementPage from './pages/AdminClubManagementPage';
 import UserDashboardPage from './pages/UserDashboardPage';
+import TestPage from './pages/TestPage';
 import LoadingSpinner from './components/common/LoadingSpinner';
 
 // Componente para scrollear al top en cada navegación
@@ -72,6 +73,7 @@ const App: React.FC = () => {
                   <Routes>
                   {/* Rutas principales */}
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/test" element={<TestPage />} />
                     <Route path="/events" element={<EventsPage />} />
                     <Route path="/events/:slug" element={<EventDetailPage />} />
                     <Route path="/djs" element={<DJsPage />} />

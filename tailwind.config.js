@@ -1,5 +1,4 @@
-import { Config } from 'tailwindcss';
-
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -12,8 +11,8 @@ export default {
         'brand-dark': '#121212',
         'brand-surface': '#181818',
         'brand-surface-variant': '#232323',
-        'brand-gold': '#DDA95D', // Nuevo color dorado para lujo
-        'brand-gold-light': '#F8E3C1', // Tono claro de dorado
+        'brand-gold': '#DDA95D',
+        'brand-gold-light': '#F8E3C1',
         'brand-orange': '#FF9000',
         'brand-orange-light': '#FFB344',
         'brand-purple': '#7F00FF',
@@ -23,9 +22,9 @@ export default {
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'], // Nueva fuente para elementos de lujo
-        display: ['Unbounded', 'cursive'], // Nueva fuente para títulos impactantes
-        mono: ['Space Mono', 'monospace'], // Fuente monoespaciada para detalles técnicos
+        serif: ['Playfair Display', 'serif'],
+        display: ['Unbounded', 'cursive'],
+        mono: ['Space Mono', 'monospace'],
       },
       boxShadow: {
         'luxury': '0px 10px 30px rgba(0, 0, 0, 0.1), 0 0 10px rgba(221, 169, 93, 0.05)',
@@ -122,4 +121,4 @@ export default {
     }
   },
   plugins: [],
-} satisfies Config; 
+} 
