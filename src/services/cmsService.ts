@@ -8,9 +8,8 @@ const getFutureDate = (monthsAhead: number = 0, additionalDays: number = 0) => {
   return now.toISOString().split('T')[0];
 };
 
-// Datos básicos en memoria para evitar problemas de localStorage
+// Datos básicos optimizados y funcionales
 const BASIC_EVENTS: EventData[] = [
-  // EVENTOS DE ESTE MES
   {
     id: 'event-1',
     name: '🔥 SunBeach Club Opening',
@@ -200,197 +199,6 @@ const BASIC_EVENTS: EventData[] = [
     submittedBy: 'admin',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-11',
-    name: '🎵 Music On - Marco Carola Vision',
-    slug: 'music-on-marco-carola',
-    description: 'Marco Carola presenta su visión del techno más puro y underground',
-    date: getFutureDate(0, 21),
-    time: '23:00',
-    price: '€60-90',
-    imageUrl: 'https://picsum.photos/seed/musicon/800/600',
-    eventType: 'Techno',
-    clubId: 'club-2',
-    promoterId: 'promoter-2',
-    djIds: ['dj-4'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-12',
-    name: '🌊 Blue Marlin Sunset Sessions',
-    slug: 'blue-marlin-sunset',
-    description: 'Las mejores sesiones de sunset con deep house y vistas espectaculares',
-    date: getFutureDate(0, 23),
-    time: '18:00',
-    price: '€30-50',
-    imageUrl: 'https://picsum.photos/seed/bluemarlin/800/600',
-    eventType: 'Sunset Session',
-    clubId: 'club-1',
-    promoterId: 'promoter-1',
-    djIds: ['dj-1'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-13',
-    name: '🤍 Nikki Beach White Party',
-    slug: 'nikki-beach-white-party',
-    description: 'La icónica White Party donde el dress code es todo blanco',
-    date: getFutureDate(0, 25),
-    time: '16:00',
-    price: '€60-100',
-    imageUrl: 'https://picsum.photos/seed/nikkiwhite/800/600',
-    eventType: 'Beach Party',
-    clubId: 'club-3',
-    promoterId: 'promoter-3',
-    djIds: ['dj-2'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-14',
-    name: '🎭 Afterlife - Tale of Us Experience',
-    slug: 'afterlife-tale-of-us',
-    description: 'Melodic techno y experiencia audiovisual única con Tale of Us',
-    date: getFutureDate(0, 27),
-    time: '22:00',
-    price: '€70-110',
-    imageUrl: 'https://picsum.photos/seed/afterlife/800/600',
-    eventType: 'Melodic Techno',
-    clubId: 'club-4',
-    promoterId: 'promoter-2',
-    djIds: ['dj-3'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-15',
-    name: '💪 Solid Grooves Raw Tech House',
-    slug: 'solid-grooves-raw-tech',
-    description: 'El sello de tech house más crudo con grooves pesados y energía pura',
-    date: getFutureDate(0, 29),
-    time: '16:00',
-    price: '€45-75',
-    imageUrl: 'https://picsum.photos/seed/solidgrooves/800/600',
-    eventType: 'Tech House',
-    clubId: 'club-5',
-    promoterId: 'promoter-1',
-    djIds: ['dj-4'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  // EVENTOS PRÓXIMO MES
-  {
-    id: 'event-16',
-    name: '🎆 Ibiza Season Grand Opening 2025',
-    slug: 'ibiza-season-opening-2025',
-    description: 'La apertura oficial de temporada con los mejores DJs del mundo',
-    date: getFutureDate(1, 1),
-    time: '16:00',
-    price: '€80-130',
-    imageUrl: 'https://picsum.photos/seed/ibizaopening/800/600',
-    eventType: 'Apertura de Temporada',
-    clubId: 'club-2',
-    promoterId: 'promoter-3',
-    djIds: ['dj-1', 'dj-2', 'dj-3'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-17',
-    name: '🌺 Flower Power - Original Hippy Party',
-    slug: 'flower-power-hippy-party',
-    description: 'Vuelve a los años 60 y 70 con música psicodélica y vestuario retro',
-    date: getFutureDate(1, 5),
-    time: '22:00',
-    price: '€50-80',
-    imageUrl: 'https://picsum.photos/seed/flowerpower/800/600',
-    eventType: 'Fiesta Temática',
-    clubId: 'club-1',
-    promoterId: 'promoter-1',
-    djIds: ['dj-2'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-18',
-    name: '🎨 Woomoon Immersive Experience',
-    slug: 'woomoon-immersive-experience',
-    description: 'Experiencia inmersiva que combina música, arte y espiritualidad',
-    date: getFutureDate(1, 9),
-    time: '20:00',
-    price: '€50-80',
-    imageUrl: 'https://picsum.photos/seed/woomoon/800/600',
-    eventType: 'Experiencia Inmersiva',
-    clubId: 'club-4',
-    promoterId: 'promoter-2',
-    djIds: ['dj-4'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-19',
-    name: '🏊‍♂️ Pikes Pool Party - Freddie Legacy',
-    slug: 'pikes-pool-party-freddie',
-    description: 'La piscina donde Freddie Mercury celebró su última fiesta de cumpleaños',
-    date: getFutureDate(1, 13),
-    time: '15:00',
-    price: '€40-70',
-    imageUrl: 'https://picsum.photos/seed/pikespool/800/600',
-    eventType: 'Pool Party',
-    clubId: 'club-3',
-    promoterId: 'promoter-3',
-    djIds: ['dj-1'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  },
-  {
-    id: 'event-20',
-    name: '🔮 Do Not Sleep Underground Selection',
-    slug: 'do-not-sleep-underground',
-    description: 'Selección underground de house y techno para verdaderos amantes',
-    date: getFutureDate(1, 17),
-    time: '01:00',
-    price: '€35-60',
-    imageUrl: 'https://picsum.photos/seed/donotsleep/800/600',
-    eventType: 'Underground',
-    clubId: 'club-5',
-    promoterId: 'promoter-2',
-    djIds: ['dj-3'],
-    socialLinks: [],
-    status: 'approved',
-    submittedBy: 'admin',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -399,8 +207,8 @@ const BASIC_DJS: DJData[] = [
     id: 'dj-1',
     name: 'David Guetta',
     slug: 'david-guetta',
-    bio: 'DJ y productor francés, uno de los más influyentes de la música electrónica mundial.',
     description: 'DJ y productor francés, uno de los más influyentes de la música electrónica mundial.',
+    bio: 'DJ y productor francés, uno de los más influyentes de la música electrónica mundial.',
     photoUrl: 'https://picsum.photos/seed/davidguetta/400/400',
     genres: ['House', 'EDM'],
     socialLinks: [
@@ -416,8 +224,8 @@ const BASIC_DJS: DJData[] = [
     id: 'dj-2',
     name: 'Solomun',
     slug: 'solomun',
-    bio: 'DJ y productor bosnio, conocido por sus sets emocionales y su residencia en Pacha.',
     description: 'DJ y productor bosnio, conocido por sus sets emocionales y su residencia en Pacha.',
+    bio: 'DJ y productor bosnio, conocido por sus sets emocionales y su residencia en Pacha.',
     photoUrl: 'https://picsum.photos/seed/solomun/400/400',
     genres: ['Deep House', 'Melodic Techno'],
     socialLinks: [
@@ -433,8 +241,8 @@ const BASIC_DJS: DJData[] = [
     id: 'dj-3',
     name: 'Calvin Harris',
     slug: 'calvin-harris',
-    bio: 'Productor escocés y uno de los DJs mejor pagados del mundo.',
     description: 'Productor escocés y uno de los DJs mejor pagados del mundo.',
+    bio: 'Productor escocés y uno de los DJs mejor pagados del mundo.',
     photoUrl: 'https://picsum.photos/seed/calvinharris/400/400',
     genres: ['EDM', 'House', 'Pop'],
     socialLinks: [
@@ -450,8 +258,8 @@ const BASIC_DJS: DJData[] = [
     id: 'dj-4',
     name: 'Martin Garrix',
     slug: 'martin-garrix',
-    bio: 'Fenómeno holandés del EDM y dueño del sello STMPD RCRDS.',
     description: 'Fenómeno holandés del EDM y dueño del sello STMPD RCRDS.',
+    bio: 'Fenómeno holandés del EDM y dueño del sello STMPD RCRDS.',
     photoUrl: 'https://picsum.photos/seed/martingarrix/400/400',
     genres: ['Progressive House', 'Future Bass', 'EDM'],
     socialLinks: [
@@ -473,9 +281,8 @@ const BASIC_CLUBS: ClubData[] = [
     description: 'Club legendario desde 1973, hogar de las mejores residencias de Ibiza.',
     address: 'Avinguda de 8 d\'Agost, 07800 Ibiza',
     photos: ['https://picsum.photos/seed/pacha/800/600'],
-    amenities: ['VIP Area', 'Restaurant', 'Terrace'],
-    capacity: 3000,
-    musicPolicyDescription: 'House, Deep House, Tech House',
+    musicType: 'House, Deep House, Tech House',
+    services: ['VIP Area', 'Restaurant', 'Terrace'],
     socialLinks: [
       { platform: 'Instagram', url: '@pachaofficial' },
       { platform: 'Website', url: 'https://www.pachaibiza.com' }
@@ -492,9 +299,8 @@ const BASIC_CLUBS: ClubData[] = [
     description: 'Superclub mundial famoso por sus fiestas épicas y la mejor producción.',
     address: 'Ctra. Ibiza a San Antonio, Km 5, 07816 Sant Rafael',
     photos: ['https://picsum.photos/seed/amnesia/800/600'],
-    amenities: ['Main Room', 'Terrace', 'VIP'],
-    capacity: 5000,
-    musicPolicyDescription: 'Techno, House, Trance',
+    musicType: 'Techno, House, Trance',
+    services: ['Main Room', 'Terrace', 'VIP'],
     socialLinks: [
       { platform: 'Instagram', url: '@amnesia_ibiza' },
       { platform: 'Website', url: 'https://www.amnesia.es' }
@@ -511,9 +317,8 @@ const BASIC_CLUBS: ClubData[] = [
     description: 'Club al aire libre con pool parties y los mejores DJs del mundo.',
     address: 'Carrer de Platja d\'en Bossa, 10, 07817 Sant Jordi de ses Salines',
     photos: ['https://picsum.photos/seed/ushuaia/800/600'],
-    amenities: ['Pool', 'Beach Access', 'VIP Cabanas'],
-    capacity: 4000,
-    musicPolicyDescription: 'EDM, Progressive House, Big Room',
+    musicType: 'EDM, Progressive House, Big Room',
+    services: ['Pool', 'Beach Access', 'VIP Cabanas'],
     socialLinks: [
       { platform: 'Instagram', url: '@ushuaiaibiza' },
       { platform: 'Website', url: 'https://www.ushuaiaibiza.com' }
@@ -530,9 +335,8 @@ const BASIC_CLUBS: ClubData[] = [
     description: 'Superclub ultramoderno con tecnología de última generación.',
     address: 'Carrer de Platja d\'en Bossa, 07817 Sant Jordi de ses Salines',
     photos: ['https://picsum.photos/seed/hiibiza/800/600'],
-    amenities: ['Theatre', 'Wild Corner', 'VIP'],
-    capacity: 5000,
-    musicPolicyDescription: 'House, Techno, Progressive',
+    musicType: 'House, Techno, Progressive',
+    services: ['Theatre', 'Wild Corner', 'VIP'],
     socialLinks: [
       { platform: 'Instagram', url: '@hiibiza' },
       { platform: 'Website', url: 'https://hiibiza.com' }
@@ -549,9 +353,8 @@ const BASIC_CLUBS: ClubData[] = [
     description: 'Club underground icónico, hogar de Circoloco y la escena techno más auténtica.',
     address: 'Carretera Salinas Km 1, 07817 Sant Jordi de ses Salines',
     photos: ['https://picsum.photos/seed/dc10/800/600'],
-    amenities: ['Main Room', 'Garden', 'Underground Vibe'],
-    capacity: 1500,
-    musicPolicyDescription: 'Underground Techno, Minimal, House',
+    musicType: 'Underground Techno, Minimal, House',
+    services: ['Main Room', 'Garden', 'Underground Vibe'],
     socialLinks: [
       { platform: 'Instagram', url: '@dc10ibiza' },
       { platform: 'Website', url: 'https://dc10ibiza.com' }
@@ -630,7 +433,7 @@ const BASIC_USERS: UserData[] = [
   }
 ];
 
-// Simple in-memory storage
+// Storage en memoria simple
 let eventsData = [...BASIC_EVENTS];
 let djsData = [...BASIC_DJS];
 let clubsData = [...BASIC_CLUBS];
@@ -639,11 +442,11 @@ let usersData = [...BASIC_USERS];
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
-// CMS Service implementation
+// CMS Service simplificado y funcional
 const cmsService = {
   // Events
   getEvents: async (): Promise<EventData[]> => {
-    await new Promise(resolve => setTimeout(resolve, 100)); // Simular delay
+    await new Promise(resolve => setTimeout(resolve, 100));
     return [...eventsData];
   },
 
@@ -657,10 +460,18 @@ const cmsService = {
     const newEvent: EventData = {
       id: generateId(),
       slug: eventData.name?.toLowerCase().replace(/\s+/g, '-') || '',
-      ...eventData as EventData,
+      name: '',
+      description: '',
+      date: '',
+      time: '',
+      imageUrl: '',
+      socialLinks: [],
+      status: 'approved',
+      submittedBy: 'admin',
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+      updatedAt: new Date().toISOString(),
+      ...eventData
+    } as EventData;
     eventsData.push(newEvent);
     return newEvent;
   },
@@ -696,10 +507,18 @@ const cmsService = {
     const newDJ: DJData = {
       id: generateId(),
       slug: djData.name?.toLowerCase().replace(/\s+/g, '-') || '',
-      ...djData as DJData,
+      name: '',
+      description: '',
+      bio: '',
+      photoUrl: '',
+      genres: [],
+      socialLinks: [],
+      status: 'approved',
+      submittedBy: 'admin',
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+      updatedAt: new Date().toISOString(),
+      ...djData
+    } as DJData;
     djsData.push(newDJ);
     return newDJ;
   },
@@ -735,10 +554,19 @@ const cmsService = {
     const newClub: ClubData = {
       id: generateId(),
       slug: clubData.name?.toLowerCase().replace(/\s+/g, '-') || '',
-      ...clubData as ClubData,
+      name: '',
+      description: '',
+      address: '',
+      photos: [],
+      musicType: '',
+      services: [],
+      socialLinks: [],
+      status: 'approved',
+      submittedBy: 'admin',
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+      updatedAt: new Date().toISOString(),
+      ...clubData
+    } as ClubData;
     clubsData.push(newClub);
     return newClub;
   },
@@ -774,10 +602,18 @@ const cmsService = {
     const newPromoter: PromoterData = {
       id: generateId(),
       slug: promoterData.name?.toLowerCase().replace(/\s+/g, '-') || '',
-      ...promoterData as PromoterData,
+      name: '',
+      description: '',
+      logoUrl: '',
+      history: '',
+      eventTypeFocus: '',
+      socialLinks: [],
+      status: 'approved',
+      submittedBy: 'admin',
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+      updatedAt: new Date().toISOString(),
+      ...promoterData
+    } as PromoterData;
     promotersData.push(newPromoter);
     return newPromoter;
   },
@@ -808,7 +644,7 @@ const cmsService = {
     return usersData.find(user => user.id === id) || null;
   },
 
-  // Authentication methods
+  // Authentication
   login: async (email: string, password: string): Promise<UserData | null> => {
     await new Promise(resolve => setTimeout(resolve, 200));
     const user = usersData.find(u => u.email === email && u.passwordHash === password);
