@@ -53,7 +53,13 @@ const App: React.FC = () => {
   const basename = process.env.NODE_ENV === 'production' ? '/' : '/';
 
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter 
+      basename={basename}
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true
+      }}
+    >
         <AuthProvider>
           <UnifiedDataProvider>
           <div className="App min-h-screen bg-brand-black text-brand-white">
