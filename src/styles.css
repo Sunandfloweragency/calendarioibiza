@@ -2,6 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Clases de tipografía personalizada */
+.font-headings {
+  font-family: 'Unbounded', cursive;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-brand-white {
+  color: #F0F0F0;
+}
+
+.text-brand-black {
+  color: #090909;
+}
+
+.text-brand-orange {
+  color: #FF9000;
+}
+
+.text-brand-purple {
+  color: #7F00FF;
+}
+
+.text-brand-gold {
+  color: #DDA95D;
+}
+
+.text-brand-gray {
+  color: #A0A0A0;
+}
+
+.text-brand-light {
+  color: #F0F0F0;
+}
+
+/* Backgrounds de marca */
+.bg-brand-black {
+  background-color: #090909;
+}
+
+.bg-brand-dark {
+  background-color: #121212;
+}
+
+.bg-brand-surface {
+  background-color: #181818;
+}
+
+.bg-brand-surface-variant {
+  background-color: #232323;
+}
+
+.bg-brand-orange {
+  background-color: #FF9000;
+}
+
+.bg-brand-purple {
+  background-color: #7F00FF;
+}
+
+.bg-brand-gold {
+  background-color: #DDA95D;
+}
+
+/* Borders de marca */
+.border-brand-orange {
+  border-color: #FF9000;
+}
+
+.border-brand-purple {
+  border-color: #7F00FF;
+}
+
+.border-brand-gold {
+  border-color: #DDA95D;
+}
+
+.border-brand-gray {
+  border-color: #A0A0A0;
+}
+
 /* Clases de tamaño de texto personalizadas */
 .text-mega {
   font-size: clamp(4rem, 12vw, 12rem);
@@ -366,39 +447,35 @@
   animation: gradientBG 18s ease infinite;
 }
 
-/* Efectos de superposición para imágenes */
 .overlay-dark-gradient {
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 25%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
 }
 
 .overlay-gold-gradient {
-  background: linear-gradient(to top, rgba(221,169,93,0.5) 0%, rgba(221,169,93,0.3) 40%, rgba(221,169,93,0) 100%);
+  background: linear-gradient(135deg, rgba(221, 169, 93, 0.8) 0%, rgba(255, 144, 0, 0.4) 100%);
 }
 
-/* Efectos de texto */
 .text-shadow-gold {
-  text-shadow: 0 0 10px rgba(221, 169, 93, 0.5);
+  text-shadow: 0 0 10px rgba(221, 169, 93, 0.6), 0 0 20px rgba(255, 144, 0, 0.4);
 }
 
 .text-shadow-purple {
-  text-shadow: 0 0 10px rgba(127, 0, 255, 0.5);
+  text-shadow: 0 0 10px rgba(127, 0, 255, 0.6), 0 0 20px rgba(163, 102, 255, 0.4);
 }
 
-/* Espaciado entre letras para títulos */
 .luxury-tracking {
-  letter-spacing: 0.05em;
-}
-
-.luxury-tracking-wide {
   letter-spacing: 0.1em;
 }
 
-/* Fondo de partículas */
-.particles-container {
-  z-index: -1;
+.luxury-tracking-wide {
+  letter-spacing: 0.2em;
 }
 
-/* Efectos 3D y holográficos avanzados */
+.particles-container {
+  position: relative;
+  overflow: hidden;
+}
+
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -417,101 +494,101 @@
 
 .text-gradient {
   background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* Fallback para casos donde no funciona el gradient */
-  color: #DDA95D;
+  animation: shimmer 3s linear infinite;
 }
 
-/* Versión más segura que no desaparece */
 .text-gradient-safe {
   background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  background-size: 200% auto;
+  color: #DDA95D;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* Fallback más robusto */
-  color: #DDA95D !important;
 }
 
-/* Versión con texto sólido como respaldo */
 .text-gradient-hover {
-  color: #DDA95D;
   background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
-  -webkit-background-clip: text;
+  background-size: 200% auto;
+  color: #DDA95D !important;
   background-clip: text;
-  transition: all 0.3s ease;
+  -webkit-background-clip: text;
 }
 
 .text-gradient-hover:hover {
   -webkit-text-fill-color: transparent;
-  color: transparent;
+  animation: shimmer 2s linear infinite;
 }
 
-/* Para elementos que desaparecen, usar gradient como shadow */
 .text-with-gradient-glow {
-  color: #FFFFFF;
-  text-shadow: 0 0 10px #DDA95D, 0 0 20px #FF9000, 0 0 30px #7F00FF;
-  transition: all 0.3s ease;
+  color: #DDA95D;
+  background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 .text-with-gradient-glow:hover {
-  color: #DDA95D;
+  -webkit-text-fill-color: transparent;
   text-shadow: 0 0 15px #DDA95D, 0 0 25px #FF9000, 0 0 35px #7F00FF;
 }
 
 .holographic {
-  background: linear-gradient(
-    45deg,
-    rgba(221, 169, 93, 0.1) 0%,
-    rgba(255, 144, 0, 0.1) 25%,
-    rgba(127, 0, 255, 0.1) 50%,
-    rgba(221, 169, 93, 0.1) 75%,
-    rgba(255, 144, 0, 0.1) 100%
+  background: linear-gradient(45deg, 
+    rgba(221, 169, 93, 0.1) 0%, 
+    rgba(255, 144, 0, 0.1) 25%, 
+    rgba(127, 0, 255, 0.1) 50%, 
+    rgba(255, 144, 0, 0.1) 75%, 
+    rgba(221, 169, 93, 0.1) 100%
   );
   background-size: 400% 400%;
-  animation: holographic-shift 4s ease-in-out infinite;
+  animation: holographic-shift 6s ease-in-out infinite;
+  border: 1px solid rgba(221, 169, 93, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 .neon-glow {
   box-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 15px currentColor,
-    0 0 20px currentColor;
+    0 0 5px #DDA95D,
+    0 0 10px #DDA95D,
+    0 0 15px #DDA95D,
+    0 0 20px #DDA95D;
 }
 
 .floating-animation {
-  animation: float 6s ease-in-out infinite;
+  animation: particle-float 8s ease-in-out infinite;
 }
 
 .pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite alternate;
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
-/* Animaciones holográficas */
 @keyframes holographic-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
 
 @keyframes pulse-glow {
-  from {
-    box-shadow: 0 0 20px rgba(221, 169, 93, 0.4);
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(221, 169, 93, 0.5);
   }
-  to {
-    box-shadow: 0 0 40px rgba(221, 169, 93, 0.8);
+  50% { 
+    box-shadow: 0 0 20px rgba(221, 169, 93, 0.8), 0 0 30px rgba(255, 144, 0, 0.5);
   }
 }
 
 @keyframes particle-float {
-  0%, 100% { 
+  0%, 100% {
     transform: translateY(0px) translateX(0px) rotate(0deg);
-    opacity: 0;
   }
-  50% { 
-    transform: translateY(-30px) translateX(10px) rotate(180deg);
-    opacity: 1;
+  33% {
+    transform: translateY(-10px) translateX(5px) rotate(120deg);
+  }
+  66% {
+    transform: translateY(5px) translateX(-5px) rotate(240deg);
   }
 }
 
@@ -520,7 +597,6 @@
   50% { opacity: 1; transform: scale(1); }
 }
 
-/* Escalas reducidas para efectos 3D más sutiles */
 .scale-102 {
   transform: scale(1.02);
 }
