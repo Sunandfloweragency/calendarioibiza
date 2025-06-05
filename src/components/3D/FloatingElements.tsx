@@ -15,6 +15,14 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
+    // Verificar si el navegador soporta las animaciones necesarias
+    if (!CSS.supports('animation', 'float3D 1s ease-in-out infinite')) {
+      console.warn('FloatingElements: Animaciones no soportadas en este navegador');
+      return;
+    }
+
+    try {
+
     // Crear elementos flotantes
     for (let i = 0; i < count; i++) {
       const element = document.createElement('div');
@@ -34,25 +42,31 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({
         left: ${x}%;
         top: ${y}%;
         background: linear-gradient(45deg, 
-          rgba(221, 169, 93, 0.1), 
-          rgba(255, 144, 0, 0.1), 
-          rgba(127, 0, 255, 0.1)
+          rgba(221, 169, 93, 0.05), 
+          rgba(255, 144, 0, 0.05), 
+          rgba(127, 0, 255, 0.05)
         );
         border-radius: 50%;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(221, 169, 93, 0.2);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(221, 169, 93, 0.1);
         animation: float3D ${duration}s ease-in-out infinite ${delay}s;
-        transform-style: preserve-3d;
         box-shadow: 
-          0 0 20px rgba(221, 169, 93, 0.3),
-          inset 0 0 20px rgba(255, 144, 0, 0.1);
+          0 0 10px rgba(221, 169, 93, 0.1),
+          inset 0 0 10px rgba(255, 144, 0, 0.05);
+        pointer-events: none;
+        will-change: transform;
       `;
       
       container.appendChild(element);
     }
+    } catch (error) {
+      console.error('FloatingElements: Error creating floating elements:', error);
+    }
 
     return () => {
-      container.innerHTML = '';
+      if (container) {
+        container.innerHTML = '';
+      }
     };
   }, [count, speed]);
 
@@ -65,22 +79,25 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({
       <style>{`
         @keyframes float3D {
           0%, 100% {
-            transform: translateY(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            transform: translateY(0px) translateX(0px) scale(1);
+            opacity: 0.6;
           }
           25% {
-            transform: translateY(-20px) rotateX(90deg) rotateY(45deg) rotateZ(15deg);
+            transform: translateY(-15px) translateX(10px) scale(1.1);
+            opacity: 0.8;
           }
           50% {
-            transform: translateY(-40px) rotateX(180deg) rotateY(90deg) rotateZ(30deg);
+            transform: translateY(-30px) translateX(-5px) scale(0.9);
+            opacity: 0.4;
           }
           75% {
-            transform: translateY(-20px) rotateX(270deg) rotateY(135deg) rotateZ(45deg);
+            transform: translateY(-15px) translateX(-10px) scale(1.05);
+            opacity: 0.7;
           }
         }
         
-        .floating-element:hover {
-          transform: scale(1.2) !important;
-          transition: transform 0.3s ease;
+        .floating-element {
+          transition: transform 0.3s ease, opacity 0.3s ease;
         }
       `}</style>
     </>
