@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Animaciones y transiciones avanzadas */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -105,26 +109,11 @@
 .ease-luxury { transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1); }
 
 /* Efecto de cristal (glassmorphism) */
-.glass {
-  background: rgba(24, 24, 24, 0.3);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
 .glass-effect {
   background: rgba(24, 24, 24, 0.3);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Variante glass con tinte naranja */
-.glass-orange {
-  background: rgba(255, 107, 53, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 107, 53, 0.2);
 }
 
 /* Efecto de borde brillante */
@@ -323,6 +312,44 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Fallback para casos donde no funciona el gradient */
+  color: #DDA95D;
+}
+
+/* Versión más segura que no desaparece */
+.text-gradient-safe {
+  background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Fallback más robusto */
+  color: #DDA95D !important;
+}
+
+/* Versión con texto sólido como respaldo */
+.text-gradient-hover {
+  color: #DDA95D;
+  background: linear-gradient(135deg, #DDA95D, #FF9000, #7F00FF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+.text-gradient-hover:hover {
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Para elementos que desaparecen, usar gradient como shadow */
+.text-with-gradient-glow {
+  color: #FFFFFF;
+  text-shadow: 0 0 10px #DDA95D, 0 0 20px #FF9000, 0 0 30px #7F00FF;
+  transition: all 0.3s ease;
+}
+
+.text-with-gradient-glow:hover {
+  color: #DDA95D;
+  text-shadow: 0 0 15px #DDA95D, 0 0 25px #FF9000, 0 0 35px #7F00FF;
 }
 
 .holographic {
