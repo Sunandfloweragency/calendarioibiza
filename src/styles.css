@@ -2,6 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Clases de tamaño de texto personalizadas */
+.text-mega {
+  font-size: clamp(4rem, 12vw, 12rem);
+  line-height: 0.8;
+}
+
+.text-ultra {
+  font-size: clamp(3rem, 10vw, 10rem);
+  line-height: 0.85;
+}
+
+.text-super {
+  font-size: clamp(2.5rem, 8vw, 8rem);
+  line-height: 0.9;
+}
+
+/* Efecto de texto 3D para Sun & Flower */
+.sun-flower-mega-3d {
+  font-size: clamp(2rem, 8vw, 6rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #DDA95D 0%, #F8E3C1 30%, #FF9000 60%, #7F00FF 100%);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 0 10px rgba(221, 169, 93, 0.5),
+    0 0 20px rgba(255, 144, 0, 0.3),
+    0 0 30px rgba(127, 0, 255, 0.2);
+  animation: shimmer 4s ease-in-out infinite alternate;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+/* Gradiente reverso para texto */
+.text-gradient-reverse {
+  background: linear-gradient(135deg, #7F00FF 0%, #A366FF 30%, #FF9000 60%, #DDA95D 100%);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite reverse;
+}
+
+/* Texto repetitivo animado */
+.text-repeat {
+  white-space: nowrap;
+  animation: scroll-x 30s linear infinite;
+}
+
+@keyframes scroll-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Partículas de fondo */
+.particles-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(45deg, #DDA95D, #FF9000);
+  border-radius: 50%;
+  animation: particle-float 8s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Animación de scroll para elementos */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Animaciones y transiciones avanzadas */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
