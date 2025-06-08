@@ -1,15 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
 import EventCard from '../components/EventCard';
-import EventCalendar from '../components/EventCalendar';
 import Calendar3D from '../components/3D/Calendar3D';
-import EventListCompact from '../components/EventListCompact';
 import FloatingElements from '../components/3D/FloatingElements';
 import HolographicCard from '../components/3D/HolographicCard';
-import NeonButton from '../components/3D/NeonButton';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import { useBreakpoint } from '../hooks/useBreakpoint';
 import { 
   CalendarDaysIcon, 
   MapPinIcon, 
@@ -23,7 +17,7 @@ const HomePage: React.FC = () => {
   const { events, loading } = useData();
   
   // Estado del dispositivo y vista
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile] = useState(window.innerWidth < 768);
   const [currentView, setCurrentView] = useState<'events' | 'calendar'>(window.innerWidth < 768 ? 'events' : 'calendar');
   
   // Ref para evitar spam de logs
@@ -68,12 +62,8 @@ const HomePage: React.FC = () => {
 
   // Vista change handler memoizado (con validación responsive)
   const handleViewChange = useCallback((view: 'events' | 'calendar') => {
-    // En móvil, no permitir cambiar a calendario
-    if (isMobile && view === 'calendar') {
-      return;
-    }
     setCurrentView(view);
-  }, [isMobile]);
+  }, []);
 
   // Efecto de partículas (optimizado)
   useEffect(() => {
@@ -141,13 +131,9 @@ const HomePage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-brand-black flex items-center justify-center relative overflow-hidden">
-        <FloatingElements count={isMobile ? 10 : 15} speed={1.2} />
-        <div className="relative z-10">
-          <LoadingSpinner 
-            size="xl" 
-            text="SUN & FLOWER IBIZA" 
-            variant="professional" 
-          />
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-accent-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-text-secondary font-medium">SUN & FLOWER IBIZA</p>
         </div>
       </div>
     );
@@ -166,14 +152,14 @@ const HomePage: React.FC = () => {
         {/* Texto repetitivo de fondo - Solo en desktop */}
         {!isMobile && (
           <>
-            <div className="absolute top-20 left-0 w-full overflow-hidden opacity-5 pointer-events-none">
-              <div className="text-repeat text-4xl md:text-6xl font-black text-brand-orange">
+            <div className="absolute top-20 left-0 w-full overflow-hidden opacity-20 pointer-events-none">
+              <div className="text-repeat text-4xl md:text-6xl font-black" style={{ color: '#ff9000' }}>
                 IBIZA CALENDAR IBIZA CALENDAR IBIZA CALENDAR IBIZA CALENDAR
               </div>
             </div>
             
-            <div className="absolute bottom-20 left-0 w-full overflow-hidden opacity-5 pointer-events-none">
-              <div className="text-repeat text-4xl md:text-6xl font-black text-brand-purple" style={{ animationDirection: 'reverse' }}>
+            <div className="absolute bottom-20 left-0 w-full overflow-hidden opacity-20 pointer-events-none">
+              <div className="text-repeat text-4xl md:text-6xl font-black" style={{ color: '#5b3ee4', animationDirection: 'reverse' }}>
                 ELECTRONIC MUSIC ELECTRONIC MUSIC ELECTRONIC MUSIC ELECTRONIC MUSIC
               </div>
             </div>
@@ -211,12 +197,7 @@ const HomePage: React.FC = () => {
                   <DevicePhoneMobileIcon className="w-5 h-5 text-brand-orange" />
                   <span>Vista de móvil - Lista de eventos</span>
                 </>
-              ) : (
-                <>
-                  <ComputerDesktopIcon className="w-5 h-5 text-brand-purple" />
-                  <span>Vista de escritorio - Calendario interactivo</span>
-                </>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

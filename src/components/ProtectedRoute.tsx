@@ -30,6 +30,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   if (adminOnly && currentUser.role !== 'admin') {
+    console.log('Usuario no admin intentando acceder a ruta de admin, redirigiendo a dashboard de usuario');
     return <Navigate to="/user/dashboard" replace />;
   }
 

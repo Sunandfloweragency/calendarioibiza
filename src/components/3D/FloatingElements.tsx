@@ -15,51 +15,44 @@ const FloatingElements: React.FC<FloatingElementsProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    try {
-      // Crear elementos flotantes
-      for (let i = 0; i < count; i++) {
-        const element = document.createElement('div');
-        element.className = 'floating-element';
-        
-        // Estilos dinámicos
-        const size = Math.random() * 60 + 20;
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        const duration = (Math.random() * 20 + 10) / speed;
-        const delay = Math.random() * 10;
-        
-        element.style.cssText = `
-          position: absolute;
-          width: ${size}px;
-          height: ${size}px;
-          left: ${x}%;
-          top: ${y}%;
-          background: linear-gradient(45deg, 
-            rgba(221, 169, 93, 0.1), 
-            rgba(255, 144, 0, 0.1), 
-            rgba(127, 0, 255, 0.1)
-          );
-          border-radius: 50%;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(221, 169, 93, 0.2);
-          animation: float3D ${duration}s ease-in-out infinite ${delay}s;
-          transform-style: preserve-3d;
-          box-shadow: 
-            0 0 20px rgba(221, 169, 93, 0.3),
-            inset 0 0 20px rgba(255, 144, 0, 0.1);
-          pointer-events: none;
-        `;
-        
-        container.appendChild(element);
-      }
-    } catch (error) {
-      console.error('FloatingElements: Error creating floating elements:', error);
+    // Crear elementos flotantes
+    for (let i = 0; i < count; i++) {
+      const element = document.createElement('div');
+      element.className = 'floating-element';
+      
+      // Estilos dinámicos
+      const size = Math.random() * 60 + 20;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const duration = (Math.random() * 20 + 10) / speed;
+      const delay = Math.random() * 10;
+      
+      element.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}%;
+        top: ${y}%;
+        background: linear-gradient(45deg, 
+          rgba(221, 169, 93, 0.1), 
+          rgba(255, 144, 0, 0.1), 
+          rgba(127, 0, 255, 0.1)
+        );
+        border-radius: 50%;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(221, 169, 93, 0.2);
+        animation: float3D ${duration}s ease-in-out infinite ${delay}s;
+        transform-style: preserve-3d;
+        box-shadow: 
+          0 0 20px rgba(221, 169, 93, 0.3),
+          inset 0 0 20px rgba(255, 144, 0, 0.1);
+      `;
+      
+      container.appendChild(element);
     }
 
     return () => {
-      if (container) {
-        container.innerHTML = '';
-      }
+      container.innerHTML = '';
     };
   }, [count, speed]);
 

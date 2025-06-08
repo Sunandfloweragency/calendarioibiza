@@ -8,7 +8,7 @@ const ConnectionStatus: React.FC = () => {
     return null; // No mostrar nada cuando todo está funcionando bien
   }
 
-  if (connectionStatus === 'cms-only') {
+  if (connectionStatus === 'localStorage') {
     return (
       <div className="fixed top-20 right-4 z-50 max-w-sm">
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 shadow-lg animate-fade-in">

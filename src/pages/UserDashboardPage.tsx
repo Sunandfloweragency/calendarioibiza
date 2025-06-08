@@ -16,6 +16,8 @@ type ModalEntityType = 'Event' | 'DJ' | 'Promoter' | 'Club';
 
 const UserDashboardPage: React.FC = () => {
   const { currentUser } = useAuth();
+  console.log('UserDashboardPage - Usuario actual:', currentUser);
+  
   const { 
     getEventsByUserId, 
     getDJsByUserId, 
@@ -76,17 +78,17 @@ const UserDashboardPage: React.FC = () => {
       if (editingItem) { // Update existing pending submission
         const fullUpdateData = { ...editingItem, ...formDataFromForm, id: editingItem.id, slug: editingItem.slug } as UserSubmissionItem; // Ensure ID and slug are preserved
         switch (modalType) {
-          case 'Event': await updateEvent(fullUpdateData as EventData, currentUser.id, false); break;
-          case 'DJ': await updateDJ(fullUpdateData as DJData, currentUser.id, false); break;
-          case 'Promoter': await updatePromoter(fullUpdateData as PromoterData, currentUser.id, false); break;
-          case 'Club': await updateClub(fullUpdateData as ClubData, currentUser.id, false); break;
+          case 'Event': await updateEvent(fullUpdateData as EventData); break;
+          case 'DJ': await updateDJ(fullUpdateData as DJData); break;
+          case 'Promoter': await updatePromoter(fullUpdateData as PromoterData); break;
+          case 'Club': await updateClub(fullUpdateData as ClubData); break;
         }
       } else { // Add new submission
         switch (modalType) {
-          case 'Event': await addEvent(formDataFromForm as Omit<EventData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, currentUser.id, false); break;
-          case 'DJ': await addDJ(formDataFromForm as Omit<DJData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, currentUser.id, false); break;
-          case 'Promoter': await addPromoter(formDataFromForm as Omit<PromoterData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, currentUser.id, false); break;
-          case 'Club': await addClub(formDataFromForm as Omit<ClubData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, currentUser.id, false); break;
+          case 'Event': await addEvent(formDataFromForm as Omit<EventData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>); break;
+          case 'DJ': await addDJ(formDataFromForm as Omit<DJData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>); break;
+          case 'Promoter': await addPromoter(formDataFromForm as Omit<PromoterData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>); break;
+          case 'Club': await addClub(formDataFromForm as Omit<ClubData, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>); break;
         }
       }
       closeModal();
@@ -105,10 +107,10 @@ const UserDashboardPage: React.FC = () => {
       setIsSubmittingModal(true); // Use this to indicate generic loading for delete
       try {
         switch (itemType) {
-          case 'Event': await deleteEvent(itemId, currentUser.id, false); break;
-          case 'DJ': await deleteDJ(itemId, currentUser.id, false); break;
-          case 'Promoter': await deletePromoter(itemId, currentUser.id, false); break;
-          case 'Club': await deleteClub(itemId, currentUser.id, false); break;
+          case 'Event': await deleteEvent(itemId); break;
+          case 'DJ': await deleteDJ(itemId); break;
+          case 'Promoter': await deletePromoter(itemId); break;
+          case 'Club': await deleteClub(itemId); break;
         }
       } catch (error) {
         console.error(`Error deleting ${itemType}:`, error);

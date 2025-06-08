@@ -65,8 +65,9 @@ export interface Promoter {
 export interface User {
   id: string;
   email: string;
+  username: string;
   name?: string;
-  role: 'USER' | 'MODERATOR' | 'ADMIN';
+  role: 'user' | 'moderator' | 'admin';
   isBanned: boolean;
   createdAt: string;
   updatedAt: string;

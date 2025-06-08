@@ -2,14 +2,16 @@ import React from 'react';
 
 interface ButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'glass' | 'gold' | 'minimal' | 'light-outline';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   fullWidth?: boolean;
+  title?: string;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,6 +24,8 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   className = '',
   fullWidth = false,
+  title,
+  icon,
 }) => {
   const baseClasses = `
     relative inline-flex items-center justify-center
@@ -35,6 +39,7 @@ const Button: React.FC<ButtonProps> = ({
   `;
 
   const sizeClasses = {
+    xs: 'px-2 py-1 text-xs rounded-md',
     sm: 'px-4 py-2 text-xs rounded-lg',
     md: 'px-6 py-3 text-sm rounded-lg',
     lg: 'px-8 py-4 text-base rounded-xl',
@@ -67,6 +72,26 @@ const Button: React.FC<ButtonProps> = ({
       hover:from-red-700 hover:to-red-800 hover:shadow-red-glow
       focus:ring-red-500/50
       before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent
+    `,
+    glass: `
+      glass bg-brand-surface/30 text-brand-white border-brand-white/20
+      hover:bg-brand-white/10 hover:border-brand-orange/50
+      focus:ring-brand-orange/50
+    `,
+    gold: `
+      bg-gradient-to-r from-yellow-600 to-yellow-700 text-brand-black
+      hover:from-yellow-500 hover:to-yellow-600 hover:shadow-yellow-glow
+      focus:ring-yellow-500/50
+    `,
+    minimal: `
+      bg-transparent text-brand-white/70 border-transparent
+      hover:text-brand-white hover:bg-brand-white/5
+      focus:ring-brand-white/30
+    `,
+    'light-outline': `
+      border-brand-white/30 text-brand-white bg-transparent
+      hover:border-brand-orange hover:text-brand-orange
+      focus:ring-brand-orange/50
     `
   };
 
@@ -81,6 +106,7 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={handleClick}
       disabled={disabled || loading}
+      title={title}
       className={`
         ${baseClasses}
         ${sizeClasses[size]}
@@ -102,6 +128,7 @@ const Button: React.FC<ButtonProps> = ({
 
       {/* Content */}
       <span className="relative z-10 flex items-center justify-center">
+        {icon && <span className="mr-2">{icon}</span>}
         {children}
       </span>
     </button>

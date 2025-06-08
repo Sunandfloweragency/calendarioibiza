@@ -139,7 +139,12 @@ const ClubsPage: React.FC = () => {
         <section className="py-20 px-6 bg-gradient-surface">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-mega text-gradient mb-6">
+
+
+
+
+
+              <h2 className="text-4xl md:text-6xl font-black text-gradient mb-6">
                 SUPER
                 <br />
                 <span className="text-gradient-reverse">CLUBS</span>
@@ -221,7 +226,7 @@ const ClubsPage: React.FC = () => {
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-mega text-gradient mb-6">
+            <h2 className="text-4xl md:text-6xl font-black text-gradient mb-6">
               TODOS LOS
               <br />
               <span className="text-gradient-reverse">VENUES</span>
@@ -321,7 +326,7 @@ const ClubsPage: React.FC = () => {
       <section className="py-20 px-6 bg-gradient-surface">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-mega text-gradient mb-6">
+            <h2 className="text-4xl md:text-6xl font-black text-gradient mb-6">
               GÉNEROS
               <br />
               <span className="text-gradient-reverse">MUSICALES</span>

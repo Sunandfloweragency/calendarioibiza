@@ -1,5 +1,4 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,42 +6,55 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brand-black': '#090909',
-        'brand-dark': '#121212',
-        'brand-surface': '#181818',
-        'brand-surface-variant': '#232323',
-        'brand-gold': '#DDA95D',
-        'brand-gold-light': '#F8E3C1',
-        'brand-orange': '#FF9000',
-        'brand-orange-light': '#FFB344',
-        'brand-purple': '#7F00FF',
-        'brand-purple-light': '#A366FF',
-        'brand-light': '#F0F0F0',
-        'brand-gray': '#A0A0A0',
+        // Paleta principal de la marca
+        'brand-black': '#000000',
+        'brand-dark': '#090909',
+        'brand-surface': '#121212',
+        'brand-surface-variant': '#1a1a1a',
+        'brand-orange': '#ff9000',
+        'brand-orange-light': '#ffb347',
+        'brand-orange-dark': '#cc7300',
+        'brand-purple': '#5b3ee4',
+        'brand-purple-light': '#8b6ff7',
+        'brand-purple-dark': '#4a2bb8',
+        'brand-light': '#ffffff',
+        'brand-gray': '#6b7280',
+        'brand-gray-light': '#9ca3af',
+        'brand-gray-dark': '#374151',
+        
+        // Colores adicionales para UI
+        'surface-primary': '#1a1a1a',
+        'surface-secondary': '#242424',
+        'text-primary': '#ffffff',
+        'text-secondary': '#e5e7eb',
+        'text-muted': '#9ca3af',
+        'accent-primary': '#ff9000',
+        'accent-secondary': '#5b3ee4',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
-        display: ['Unbounded', 'cursive'],
-        mono: ['Space Mono', 'monospace'],
+        serif: ['Playfair Display', 'serif'], // Nueva fuente para elementos de lujo
+        display: ['Unbounded', 'cursive'], // Nueva fuente para títulos impactantes
+        mono: ['Space Mono', 'monospace'], // Fuente monoespaciada para detalles técnicos
       },
       boxShadow: {
-        'luxury': '0px 10px 30px rgba(0, 0, 0, 0.1), 0 0 10px rgba(221, 169, 93, 0.05)',
-        'luxury-hover': '0px 20px 40px rgba(0, 0, 0, 0.15), 0 0 15px rgba(221, 169, 93, 0.1)',
-        'main-card': '0px 4px 20px rgba(0, 0, 0, 0.15), 0 0 8px rgba(255, 144, 0, 0.05), 0 0 6px rgba(127, 0, 255, 0.04)',
-        'main-card-hover': '0px 10px 30px rgba(0, 0, 0, 0.2), 0 0 12px rgba(255, 144, 0, 0.08), 0 0 10px rgba(127, 0, 255, 0.06)',
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
-        'neon-glow': '0 0 5px rgba(221, 169, 93, 0.2), 0 0 20px rgba(221, 169, 93, 0.1), 0 0 30px rgba(221, 169, 93, 0.05)',
-        'purple-glow': '0 0 5px rgba(127, 0, 255, 0.2), 0 0 20px rgba(127, 0, 255, 0.1), 0 0 30px rgba(127, 0, 255, 0.05)',
-        'orange-glow': '0 0 5px rgba(255, 144, 0, 0.2), 0 0 20px rgba(255, 144, 0, 0.1), 0 0 30px rgba(255, 144, 0, 0.05)',
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+        'glass-hover': '0 12px 48px 0 rgba(0, 0, 0, 0.4)',
+        'card': '0 4px 20px rgba(0, 0, 0, 0.15)',
+        'card-hover': '0 10px 30px rgba(0, 0, 0, 0.25)',
+        'orange-glow': '0 0 20px rgba(255, 144, 0, 0.3), 0 0 40px rgba(255, 144, 0, 0.1)',
+        'purple-glow': '0 0 20px rgba(91, 62, 228, 0.3), 0 0 40px rgba(91, 62, 228, 0.1)',
+        'soft': '0 2px 10px rgba(0, 0, 0, 0.1)',
+        'medium': '0 4px 20px rgba(0, 0, 0, 0.15)',
+        'strong': '0 8px 30px rgba(0, 0, 0, 0.2)',
       },
       backgroundImage: {
-        'gradient-luxury': 'linear-gradient(135deg, #090909 0%, #1e1e1e 100%)',
-        'gradient-gold': 'linear-gradient(135deg, #DDA95D 0%, #F8E3C1 100%)',
-        'gradient-purple': 'linear-gradient(135deg, #7F00FF 0%, #A366FF 100%)',
-        'gradient-orange': 'linear-gradient(135deg, #FF9000 0%, #FFB344 100%)',
-        'gradient-dark': 'linear-gradient(135deg, #121212 0%, #232323 100%)',
-        'animated-gradient': 'linear-gradient(-45deg, rgba(10,10,10,0.95), rgba(20,0,34,0.95), rgba(34,16,0,0.95), rgba(12,6,0,0.95))',
+        'gradient-primary': 'linear-gradient(135deg, #000000 0%, #121212 100%)',
+        'gradient-surface': 'linear-gradient(135deg, #090909 0%, #1a1a1a 100%)',
+        'gradient-orange': 'linear-gradient(135deg, #ff9000 0%, #ffb347 100%)',
+        'gradient-purple': 'linear-gradient(135deg, #5b3ee4 0%, #8b6ff7 100%)',
+        'gradient-glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+        'gradient-overlay': 'linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%)',
       },
       keyframes: {
         'float': {

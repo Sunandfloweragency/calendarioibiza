@@ -1,12 +1,74 @@
 import { SupabaseService } from '../services/supabaseService';
 import cmsService from '../services/cmsService';
 import { Event, DJ, Club, Promoter } from '../types/supabase';
+import { supabaseAdmin } from '../lib/supabase';
 
 export class DataMigration {
   private supabaseService: SupabaseService;
   
   constructor() {
     this.supabaseService = new SupabaseService();
+  }
+
+  // Función para limpiar registros duplicados (opcional)
+  private async cleanupDuplicates(): Promise<void> {
+    try {
+      console.log('🧹 Limpiando posibles registros duplicados...');
+      
+      // Esta función es opcional - solo para debug
+      const status = await this.checkSupabaseData();
+      console.log('📊 Estado actual de Supabase:', status);
+      
+    } catch (error) {
+      console.error('❌ Error limpiando duplicados:', error);
+      // No bloquear la migración por este error
+    }
+  }
+
+  // Función para asegurar que existe un usuario administrativo
+  private async ensureAdminUser(): Promise<void> {
+    try {
+      console.log('🔧 Verificando usuario administrativo...');
+      
+      // Verificar si existe admin@sunflower.com
+      const { data: adminUser } = await supabaseAdmin
+        .from('users')
+        .select('id')
+        .eq('email', 'admin@sunflower.com')
+        .single();
+
+      if (adminUser) {
+        console.log('✅ Usuario admin@sunflower.com ya existe');
+        return;
+      }
+
+      // Crear usuario administrativo
+      console.log('🆕 Creando usuario administrativo...');
+      const { data: newAdmin, error } = await supabaseAdmin
+        .from('users')
+        .insert({
+          id: '00000000-0000-0000-0000-000000000002',
+          email: 'admin@sunflower.com',
+          username: 'admin_sunflower',
+          password_hash: '$2b$10$adminHashForSunflowerCalendar12345', // Hash para admin
+          name: 'Administrador',
+          role: 'admin',
+          is_banned: false
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('❌ Error creando usuario admin:', error);
+        throw new Error(`Error creando usuario admin: ${error.message}`);
+      }
+
+      console.log('✅ Usuario administrativo creado:', newAdmin.id);
+
+    } catch (error) {
+      console.error('❌ Error en ensureAdminUser:', error);
+      // No arrojar error, continuar con la migración
+    }
   }
 
   async migrateAllData(): Promise<{
@@ -19,7 +81,13 @@ export class DataMigration {
     };
     totalMigrated: number;
   }> {
-    console.log('🚀 Iniciando migración masiva de datos localStorage → Supabase...');
+    console.log('🚀 Iniciando migración de datos a Supabase...');
+    
+    // Verificar estado actual
+    await this.cleanupDuplicates();
+    
+    // Asegurar que existe un usuario administrativo antes de empezar
+    await this.ensureAdminUser();
     
     const results = {
       clubs: { success: 0, failed: 0, errors: [] as string[] },

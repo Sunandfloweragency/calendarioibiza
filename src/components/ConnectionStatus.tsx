@@ -16,7 +16,7 @@ const ConnectionStatus: React.FC = () => {
 
   const getStatusConfig = () => {
     switch (connectionStatus) {
-      case 'cms-only':
+      case 'localStorage':
         return {
           icon: WifiIcon,
           title: 'Modo Offline',

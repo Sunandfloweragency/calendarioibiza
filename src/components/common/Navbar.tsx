@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
-    { path: '/ibiza-calendar', label: 'INICIO', icon: CalendarDaysIcon },
+    { path: '/', label: 'INICIO', icon: CalendarDaysIcon },
     { path: '/events', label: 'EVENTOS', icon: MusicalNoteIcon },
     { path: '/djs', label: 'DJS', icon: MusicalNoteIcon },
     { path: '/promoters', label: 'PROMOTORES', icon: UserGroupIcon },
@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link 
-              to="/ibiza-calendar" 
+              to="/" 
               className="flex items-center space-x-3 group"
               onClick={closeMenu}
             >
@@ -84,17 +84,19 @@ const Navbar: React.FC = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navLinks.map(({ path, label, icon: Icon }) => (
+              {navLinks.map(({ path, label }) => (
                 <Link
                   key={path}
                   to={path}
-                  className={`link-modern font-bold text-sm tracking-wider transition-all duration-300 ${
+                  className={`font-black text-sm tracking-wider transition-all duration-300 transform hover:scale-105 ${
                     isActive(path) 
-                      ? 'text-brand-orange' 
-                      : 'text-brand-white hover:text-brand-orange'
+                      ? 'text-brand-purple shadow-lg' 
+                      : 'text-brand-purple hover:text-blue-400'
                   }`}
+                  style={{
+                    textShadow: isActive(path) ? '0 0 10px rgba(91, 62, 228, 0.8)' : '0 0 5px rgba(91, 62, 228, 0.3)'
+                  }}
                 >
-                  <Icon className="w-5 h-5 inline mr-2" />
                   {label}
                 </Link>
               ))}
@@ -147,13 +149,14 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <Link
                     to="/login"
-                    className="link-modern font-bold text-sm tracking-wider"
+                    className="font-black text-sm tracking-wider text-brand-purple hover:text-brand-orange transition-colors duration-300 transform hover:scale-105"
+                    style={{ textShadow: '0 0 8px rgba(91, 62, 228, 0.3)' }}
                   >
                     INICIAR SESIÓN
                   </Link>
                   <Link
                     to="/register"
-                    className="btn-modern px-6 py-2 text-sm rounded-lg"
+                    className="bg-gradient-to-r from-brand-orange to-brand-purple text-brand-white font-black px-6 py-2 text-sm rounded-lg hover:from-brand-purple hover:to-brand-orange transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     REGISTRARSE
                   </Link>
@@ -193,20 +196,23 @@ const Navbar: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6 py-8">
             {/* Navigation Links */}
             <div className="space-y-6 mb-8">
-              {navLinks.map(({ path, label, icon: Icon }, index) => (
+              {navLinks.map(({ path, label }, index) => (
                 <Link
                   key={path}
                   to={path}
                   onClick={closeMenu}
-                  className={`flex items-center space-x-4 p-4 rounded-xl transition-all duration-300 animate-slide-down ${
+                  className={`flex items-center justify-center p-4 rounded-xl transition-all duration-300 animate-slide-down transform hover:scale-105 ${
                     isActive(path) 
-                      ? 'bg-gradient-orange text-brand-white' 
-                      : 'glass hover:glass-orange text-brand-white hover:text-brand-white'
+                      ? 'bg-gradient-to-r from-brand-purple to-blue-500 text-brand-white shadow-lg' 
+                      : 'glass hover:bg-gradient-to-r hover:from-brand-purple/20 hover:to-blue-500/20 text-brand-purple hover:text-blue-400 border hover:border-brand-purple/50'
                   }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  style={{ 
+                    animationDelay: `${index * 0.1}s`,
+                    boxShadow: isActive(path) ? '0 0 20px rgba(91, 62, 228, 0.5)' : undefined,
+                    textShadow: '0 0 8px rgba(91, 62, 228, 0.4)'
+                  }}
                 >
-                  <Icon className="w-6 h-6" />
-                  <span className="text-lg font-bold tracking-wider">{label}</span>
+                  <span className="text-lg font-black tracking-wider">{label}</span>
                 </Link>
               ))}
             </div>
@@ -250,14 +256,15 @@ const Navbar: React.FC = () => {
                   <Link
                     to="/login"
                     onClick={closeMenu}
-                    className="w-full flex items-center justify-center p-4 btn-outline rounded-xl text-lg font-bold tracking-wider"
+                    className="w-full flex items-center justify-center p-4 border-2 border-brand-purple/50 text-brand-purple hover:bg-brand-purple hover:text-brand-white rounded-xl text-lg font-black tracking-wider transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    style={{ textShadow: '0 0 8px rgba(91, 62, 228, 0.3)' }}
                   >
                     INICIAR SESIÓN
                   </Link>
                   <Link
                     to="/register"
                     onClick={closeMenu}
-                    className="w-full flex items-center justify-center p-4 btn-modern rounded-xl text-lg font-bold tracking-wider"
+                    className="w-full flex items-center justify-center p-4 bg-gradient-to-r from-brand-orange to-brand-purple text-brand-white hover:from-brand-purple hover:to-brand-orange rounded-xl text-lg font-black tracking-wider transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     REGISTRARSE
                   </Link>

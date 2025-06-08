@@ -3,7 +3,7 @@ import { EventData, DJData, PromoterData, ClubData, UserData, UserRole } from '.
 export const APP_NAME = "Sun and Flower Ibiza Calendar";
 
 // Admin User
-export const ADMIN_USERNAME = "AdminBassse"; 
+export const ADMIN_USERNAME = "AdminSF"; 
 export const ADMIN_EMAIL = "admin@sunflower.ibiza";
 export const ADMIN_PASSWORD = "admin123"; 
 export const ADMIN_USER_ID = "admin001";

@@ -115,8 +115,8 @@ const EditEventModal: React.FC<EditModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="glass rounded-3xl p-8 w-full max-w-6xl max-h-[95vh] overflow-y-auto border border-brand-orange/20">
+    <div className="modal-overlay">
+      <div className="modal-content w-full max-w-6xl">
         <div className="flex items-center justify-between mb-8">
           <h3 className="text-3xl font-bold text-gradient">
             {isCreating ? 'Crear Nuevo Evento' : 'Editar Evento'}
@@ -139,41 +139,41 @@ const EditEventModal: React.FC<EditModalProps> = ({
             
             <div className="grid md:grid-cols-2 gap-6">
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-brand-white mb-3">
+                <label className="label-contrast">
                   Nombre del Evento *
                 </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full p-4 glass rounded-xl text-black border border-brand-orange/20 focus:border-brand-orange/50 transition-all duration-300"
+                  className="input-contrast"
                   placeholder="Ej: Sunset Party Ibiza 2024"
               required
             />
           </div>
 
             <div>
-                <label className="block text-sm font-medium text-brand-white mb-3">
+                <label className="label-contrast">
                   Fecha del Evento *
                 </label>
               <input
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                  className="w-full p-4 glass rounded-xl text-black border border-brand-orange/20 focus:border-brand-orange/50 transition-all duration-300"
+                  className="input-contrast"
                 required
               />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-brand-white mb-3">
+                <label className="label-contrast">
                   Hora de Inicio
                 </label>
               <input
                   type="time"
                 value={formData.time || ''}
                 onChange={(e) => setFormData(prev => ({ ...prev, time: e.target.value }))}
-                  className="w-full p-4 glass rounded-xl text-black border border-brand-orange/20 focus:border-brand-orange/50 transition-all duration-300"
+                  className="input-contrast"
                 />
               </div>
 
@@ -729,21 +729,33 @@ const AdminEventManagementPage: React.FC = () => {
 
   return (
     <CMSLayout title="Gestión de Eventos">
-      <div className="mb-6 flex justify-between items-center">
-        <p className="text-brand-gray">
-          Total de eventos: <span className="font-bold text-brand-orange">{events.length}</span>
+      <div className="bg-white p-6 rounded-xl shadow-lg mb-8 border border-gray-200">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-gray-700">
+              Total de eventos: <span className="font-bold text-orange-600">{events.length}</span>
         </p>
-        <button className="btn-primary flex items-center space-x-2" onClick={handleCreate}>
+            <p className="text-sm text-gray-500 mt-1">
+              Aprobados: {events.filter(e => e.status === 'approved').length} | 
+              Pendientes: {events.filter(e => e.status === 'pending').length} | 
+              Rechazados: {events.filter(e => e.status === 'rejected').length}
+            </p>
+          </div>
+          <button 
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-lg flex items-center space-x-2 font-semibold shadow-lg hover:shadow-xl transition-all duration-300" 
+            onClick={handleCreate}
+          >
           <PlusIcon className="w-5 h-5" />
           <span>Agregar Evento</span>
         </button>
+        </div>
       </div>
 
       {events.length === 0 ? (
-        <div className="text-center py-20">
+        <div className="text-center py-20 bg-white rounded-xl shadow-lg">
           <div className="text-6xl mb-4">🎉</div>
-          <h3 className="text-xl font-bold text-brand-white mb-2">No hay eventos</h3>
-          <p className="text-brand-gray">Agrega el primer evento para comenzar</p>
+          <h3 className="text-xl font-bold text-gray-800 mb-2">No hay eventos</h3>
+          <p className="text-gray-600">Agrega el primer evento para comenzar</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -755,7 +767,7 @@ const AdminEventManagementPage: React.FC = () => {
             return (
               <div
                 key={event.id}
-                className="bg-brand-surface border border-brand-orange/20 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+                className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-xl transition-all duration-300 shadow-lg"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-4">

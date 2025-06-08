@@ -1,64 +1,59 @@
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
-export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, '.', '');
-    return {
-      // Base path para subdominio - se puede cambiar antes de build
-      base: mode === 'production' ? '/' : '/',
-      
-      define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-      },
-      
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '.'),
-        }
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false, // Desactivar sourcemaps en producción para mejor rendimiento
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Eliminar console.logs en producción
+        drop_debugger: true,
       },
-      
-      // Optimizaciones para producción
-      build: {
-        target: 'esnext',
-        minify: 'esbuild',
-        sourcemap: false,
+    },
         rollupOptions: {
           output: {
             manualChunks: {
               vendor: ['react', 'react-dom'],
+          supabase: ['@supabase/supabase-js'],
+          icons: ['@heroicons/react'],
               router: ['react-router-dom'],
-              icons: ['@heroicons/react']
-            }
-          },
-          onwarn(warning, warn) {
-            // Ignorar advertencias específicas
-            if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
-            if (warning.code === 'CIRCULAR_DEPENDENCY') return;
-            warn(warning);
-          }
-        }
+        },
       },
-      
-      // Configuración ESBuild para ignorar errores TS en build
-      esbuild: {
-        logOverride: { 
-          'this-is-undefined-in-esm': 'silent',
-          'empty-import-meta': 'silent'
-        }
-      },
-      
-      // Server optimizations
+    },
+    chunkSizeWarningLimit: 1000,
+  },
       server: {
-        hmr: {
-          overlay: false
-        }
-      },
-      
-      // Preview mode para testing
+    port: 5176,
+    host: true,
+    open: true,
+  },
       preview: {
-        port: 5173,
-        host: true
-      }
-    };
-});
+    port: 5177,
+    host: true,
+  },
+  define: {
+    // Definir variables globales para optimización
+    __DEV__: JSON.stringify(process.env.NODE_ENV === 'development'),
+  },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      '@supabase/supabase-js',
+      '@heroicons/react/24/outline',
+      '@heroicons/react/24/solid',
+      'react-router-dom',
+      'date-fns',
+    ],
+  },
+})

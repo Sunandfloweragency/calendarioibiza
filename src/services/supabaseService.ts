@@ -2,13 +2,21 @@ import { supabase, supabaseAdmin } from '../lib/supabase';
 import { Event, DJ, Club, Promoter, User } from '../types/supabase';
 
 export class SupabaseService {
-  private generateSlug(text: string): string {
-    return text
+  private generateSlug(text: string, isUnique: boolean = false): string {
+    let slug = text
       .toLowerCase()
       .replace(/[^a-z0-9 -]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim();
+    
+    // Si necesitamos un slug único, agregamos timestamp
+    if (isUnique) {
+      const timestamp = Date.now().toString(36); // Base36 para que sea más corto
+      slug = `${slug}-${timestamp}`;
+    }
+    
+    return slug;
   }
 
   // Eventos
@@ -43,7 +51,7 @@ export class SupabaseService {
   }
 
   async addEvent(eventData: Omit<Event, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, isMigration = false): Promise<Event> {
-    const slug = this.generateSlug(eventData.name);
+    const slug = this.generateSlug(eventData.name, isMigration);
     
     let submittedById = '00000000-0000-0000-0000-000000000001';
     
@@ -186,7 +194,7 @@ export class SupabaseService {
   }
 
   async addDJ(djData: Omit<DJ, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, isMigration = false): Promise<DJ> {
-    const slug = this.generateSlug(djData.name);
+    const slug = this.generateSlug(djData.name, isMigration);
     
     let submittedById = '00000000-0000-0000-0000-000000000001';
     
@@ -305,7 +313,7 @@ export class SupabaseService {
   }
 
   async addClub(clubData: Omit<Club, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, isMigration = false): Promise<Club> {
-    const slug = this.generateSlug(clubData.name);
+    const slug = this.generateSlug(clubData.name, isMigration);
     
     let submittedById = '00000000-0000-0000-0000-000000000001';
     
@@ -427,7 +435,7 @@ export class SupabaseService {
   }
 
   async addPromoter(promoterData: Omit<Promoter, 'id' | 'slug' | 'status' | 'submittedBy' | 'createdAt' | 'updatedAt'>, isMigration = false): Promise<Promoter> {
-    const slug = this.generateSlug(promoterData.name);
+    const slug = this.generateSlug(promoterData.name, isMigration);
     
     let submittedById = '00000000-0000-0000-0000-000000000001';
     
@@ -531,9 +539,11 @@ export class SupabaseService {
       .from('users')
       .update({
         email: userData.email,
+        username: userData.username,
         name: userData.name,
         role: userData.role,
         is_banned: userData.isBanned
+        // Nota: No actualizamos password_hash aquí por seguridad
       })
       .eq('id', userData.id)
       .select()
@@ -624,6 +634,7 @@ export class SupabaseService {
     return {
       id: data.id,
       email: data.email,
+      username: data.username,
       name: data.name,
       role: data.role,
       isBanned: data.is_banned,
@@ -659,6 +670,8 @@ export class SupabaseService {
     const migrationUserId = '00000000-0000-0000-0000-000000000001';
     
     try {
+      console.log('🔧 Verificando usuario de migración...');
+      
       // Intentar obtener el usuario de migración
       const { data: existingUser, error: getUserError } = await supabaseAdmin
         .from('users')
@@ -667,8 +680,15 @@ export class SupabaseService {
         .single();
 
       if (existingUser) {
+        console.log('✅ Usuario de migración ya existe:', migrationUserId);
         return migrationUserId;
       }
+
+      if (getUserError && getUserError.code !== 'PGRST116') {
+        console.error('❌ Error consultando usuario:', getUserError);
+      }
+
+      console.log('🆕 Creando usuario de migración...');
 
       // Si no existe, crear el usuario de migración
       const { data: newUser, error: createUserError } = await supabaseAdmin
@@ -676,26 +696,62 @@ export class SupabaseService {
         .insert({
           id: migrationUserId,
           email: 'migration@sunandflower.agency',
+          username: 'migration_system',
+          password_hash: '$2b$10$dummyHashForMigrationUser123456789', // Hash temporal para migración
           name: 'Sistema de Migración',
-          role: 'ADMIN',
+          role: 'admin',
           is_banned: false
         })
         .select()
         .single();
 
       if (createUserError) {
-        console.error('Error creando usuario de migración:', createUserError);
-        // Si no se puede crear el usuario, intentar con un UUID aleatorio
-        return crypto.randomUUID();
+        console.error('❌ Error creando usuario de migración:', createUserError);
+        
+        // Como segunda opción, intentar con el usuario admin@sunflower.com que sabemos existe
+        console.log('🔄 Intentando usar usuario admin existente...');
+        const { data: adminUser } = await supabaseAdmin
+          .from('users')
+          .select('id')
+          .eq('email', 'admin@sunflower.com')
+          .single();
+          
+        if (adminUser) {
+          console.log('✅ Usando usuario admin existente:', adminUser.id);
+          return adminUser.id;
+        }
+        
+        // Como último recurso, crear un usuario con UUID temporal
+        const tempUserId = crypto.randomUUID();
+        console.log('🆔 Creando usuario temporal:', tempUserId);
+        
+                 const { data: tempUser, error: tempError } = await supabaseAdmin
+           .from('users')
+           .insert({
+             id: tempUserId,
+             email: `migration-${Date.now()}@sunandflower.agency`,
+             username: `migration_temp_${Date.now()}`,
+             password_hash: '$2b$10$tempHashForMigrationUser987654321', // Hash temporal
+             name: 'Usuario Temporal de Migración',
+             role: 'admin',
+             is_banned: false
+           })
+           .select()
+           .single();
+          
+        if (tempError) {
+          throw new Error(`No se pudo crear ningún usuario: ${tempError.message}`);
+        }
+        
+        return tempUserId;
       }
 
-      console.log('✅ Usuario de migración creado:', newUser);
+      console.log('✅ Usuario de migración creado exitosamente:', newUser.id);
       return migrationUserId;
 
     } catch (error) {
-      console.error('Error en ensureMigrationUser:', error);
-      // Como fallback, generar un UUID aleatorio
-      return crypto.randomUUID();
+      console.error('❌ Error crítico en ensureMigrationUser:', error);
+      throw new Error(`Error creando usuario de migración: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 }

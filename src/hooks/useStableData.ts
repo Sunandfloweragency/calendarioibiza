@@ -143,7 +143,7 @@ export const useReadOnlyData = () => {
     // Solo funciones de lectura
     getEventById: (id: string) => events.find(e => e.id === id),
     getDJById: (id: string) => djs.find(d => d.id === id),
-    getClubById: (id: string) => clubs.find(c => c.id === c.id),
+    getClubById: (id: string) => clubs.find(c => c.id === id),
     getPromoterById: (id: string) => promoters.find(p => p.id === id),
     
     getEventBySlug: (slug: string) => events.find(e => e.slug === slug),

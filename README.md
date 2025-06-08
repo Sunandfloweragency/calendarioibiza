@@ -1,139 +1,235 @@
-# 🎵 Sun & Flower Ibiza Calendar
+# 🌅 Ibiza Calendar - Sun and Flower
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Sunandfloweragency/calendarioibiza)
+Calendario de eventos de música electrónica para Ibiza. Aplicación React optimizada y profesional con arquitectura limpia.
 
-La guía definitiva de música electrónica en la isla blanca. Descubre los mejores eventos, DJs, clubs y promotores de Ibiza.
+## 🚀 **Características**
 
-## 🌟 Características
+- **🎵 Eventos de música electrónica** - Calendario completo de Ibiza
+- **📱 Responsive Design** - Mobile first con adaptación automática
+- **🎨 Interfaz moderna** - Efectos 3D, holográficos y animaciones con paleta de marca
+- **⚡ Alta performance** - Carga rápida y navegación fluida
+- **💾 Sistema híbrido** - localStorage + Supabase inteligente
+- **🔍 Búsqueda avanzada** - Filtros por DJ, club, promoter, fecha
+- **🌐 Multi-idioma** - Soporte i18next
+- **🔐 CMS integrado** - Panel de administración con autenticación
 
-- 📅 **Calendario interactivo** con eventos en tiempo real
-- 🎧 **Perfiles completos** de DJs locales e internacionales  
-- 🏛️ **Información detallada** de los mejores clubs y venues
-- 🎉 **Organizadores de eventos** y promotores verificados
-- 📱 **Diseño responsive** optimizado para móvil y desktop
-- ⚡ **Rendimiento ultra-rápido** con Vite y React
-- 🎨 **Interfaz moderna** con efectos 3D y holográficos
+---
 
-## 🚀 Deploy en Vercel
+## 🛠 **Stack Tecnológico**
 
-### Deploy Automático
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Sunandfloweragency/calendarioibiza)
+- **Frontend**: React 18 + TypeScript + TailwindCSS
+- **Routing**: React Router 6 (con future flags)
+- **Bundler**: Vite 6
+- **Base de datos**: Supabase (PostgreSQL)
+- **Persistencia**: Sistema híbrido inteligente
+- **Iconos**: Heroicons
+- **Idiomas**: i18next
+- **Analytics**: Vercel Analytics + Speed Insights
 
-### Deploy Manual
-1. Haz fork de este repositorio
-2. Ve a [Vercel](https://vercel.com)
-3. Importa tu repositorio fork
-4. Vercel detectará automáticamente la configuración de Vite
-5. ¡Deploy automático!
+---
 
-## 🛠️ Desarrollo Local
+## 🎨 **Paleta de Colores de Marca**
+
+```css
+Negro: #000000
+Naranja: #ff9000  
+Azul/Morado: #5b3ee4
+```
+
+---
+
+## 🏗 **Instalación y Desarrollo**
 
 ### Prerrequisitos
-- Node.js 18+ 
-- npm o yarn
+```bash
+Node.js 18+ 
+npm o yarn
+```
 
 ### Instalación
 ```bash
-# Clonar el repositorio
-git clone https://github.com/Sunandfloweragency/calendarioibiza.git
-
-# Navegar al directorio
-cd calendarioibiza
+# Clonar repositorio
+git clone <repo-url>
+cd nuevo-calendar
 
 # Instalar dependencias
 npm install
 
-# Iniciar servidor de desarrollo
+# Iniciar desarrollo
 npm run dev
 ```
 
-### Scripts Disponibles
+### Scripts disponibles
 ```bash
-npm run dev          # Servidor de desarrollo
-npm run build        # Build para producción  
-npm run preview      # Preview del build
-npm run lint         # Linting con ESLint
-npm run type-check   # Verificación de tipos TypeScript
+npm run dev              # Desarrollo (puerto 5173)
+npm run build            # Build estándar
+npm run build:prod       # Build optimizado para producción
+npm run build:deploy     # Build para despliegue
+npm run preview          # Preview del build
+npm run type-check       # Verificar tipos TypeScript
+npm run clean            # Limpiar cache y dist
 ```
-
-## 📁 Estructura del Proyecto
-
-```
-calendarioibiza/
-├── src/
-│   ├── components/          # Componentes React
-│   │   ├── 3D/             # Componentes con efectos 3D
-│   │   ├── common/         # Componentes reutilizables
-│   │   └── cms/            # Componentes de administración
-│   ├── contexts/           # Contextos de React
-│   ├── hooks/              # Hooks personalizados
-│   ├── pages/              # Páginas principales
-│   ├── services/           # Servicios y APIs
-│   ├── types/              # Definiciones de tipos TypeScript
-│   └── styles/             # Estilos CSS/Tailwind
-├── public/                 # Archivos estáticos
-├── dist/                   # Build de producción
-└── vercel.json            # Configuración de Vercel
-```
-
-## 🎨 Tecnologías
-
-- **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS + CSS Modules
-- **Routing**: React Router DOM
-- **State Management**: React Context
-- **Icons**: Heroicons
-- **Animations**: CSS Animations + Framer Motion
-- **Deploy**: Vercel
-- **Analytics**: Vercel Analytics + Speed Insights
-
-## 🌐 URLs
-
-- **🌍 Producción**: https://calendarioibiza.sunandfloweragency.com
-- **⚡ Vercel**: https://calendarioibiza.vercel.app
-- **📱 Móvil**: Optimizado para todas las pantallas
-
-## 📊 Performance
-
-- ⚡ **Core Web Vitals**: Optimizado
-- 📱 **Mobile-First**: Diseño responsive
-- 🚀 **Fast Loading**: Lazy loading y code splitting
-- 🔍 **SEO Optimized**: Meta tags y structured data
-
-## 🔒 Seguridad
-
-- 🛡️ **CSP Headers**: Content Security Policy
-- 🔐 **HTTPS**: SSL/TLS habilitado
-- 🚫 **XSS Protection**: Cross-site scripting prevention
-- 🔒 **CSRF Protection**: Request validation
-
-## 📈 Analytics
-
-- 📊 Vercel Analytics integrado
-- ⚡ Speed Insights habilitado
-- 📱 Real User Monitoring
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
-
-## 📜 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
-
-## 📞 Contacto
-
-- **Website**: https://sunandfloweragency.com
-- **Email**: info@sunandfloweragency.com
-- **Instagram**: @sunandfloweragency
 
 ---
 
-⭐ Si este proyecto te gusta, ¡dale una estrella en GitHub!
+## 📁 **Estructura del Proyecto (Limpia)**
 
-**Hecho con ❤️ por Sun & Flower Agency para la comunidad de Ibiza** 🏝️🎵
+```
+src/
+├── 📁 components/          # Componentes React
+│   ├── 📁 3D/             # Efectos 3D (Calendar3D, FloatingElements, etc.)
+│   ├── 📁 admin/          # Panel de administración
+│   ├── 📁 cms/            # Sistema de gestión de contenido
+│   └── 📁 common/         # Componentes reutilizables
+├── 📁 contexts/           # React Context (AuthContext, DataContext)
+├── 📁 hooks/              # Custom hooks (useAuth, useBreakpoint, useStableData)
+├── 📁 lib/                # Configuración Supabase centralizada
+├── 📁 pages/              # Páginas principales
+├── 📁 services/           # Servicios API (supabaseService, cmsService)
+├── 📁 types/              # Tipos TypeScript
+├── 📁 utils/              # Utilidades (migración)
+├── 📄 App.tsx             # Componente principal
+├── 📄 main.tsx            # Entry point
+├── 📄 styles.css          # Estilos globales + Tailwind
+├── 📄 constants.ts        # Constantes de la aplicación
+└── 📄 i18n.ts             # Configuración de idiomas
+```
+
+---
+
+## 🎯 **Funcionalidades Principales**
+
+### 🏠 **Homepage**
+- Hero section con animaciones profesionales
+- Vista automática: móvil = lista, desktop = calendario 3D
+- Eventos próximos con tarjetas holográficas
+
+### 📅 **Calendario 3D**
+- Vista mensual interactiva con efectos visuales
+- Tooltips informativos
+- Navegación fluida entre meses
+- Responsive design automático
+
+### 🎭 **Perfiles Completos**
+- **DJs**: Biografía, géneros, eventos, redes sociales
+- **Clubs**: Ubicación, capacidad, eventos, galería
+- **Promoters**: Historia, eventos organizados
+
+### 🔐 **CMS Integrado**
+- Panel de administración protegido
+- Gestión de usuarios y roles
+- Aprobación de contenido
+- Migración de datos localStorage ↔ Supabase
+
+---
+
+## 💾 **Sistema de Datos Híbrido Inteligente**
+
+### **Detección Automática**
+```typescript
+// El sistema detecta automáticamente la fuente de datos
+const hasSupabaseData = await checkSupabaseData();
+if (hasSupabaseData) {
+  // Usar Supabase
+} else {
+  // Usar localStorage
+}
+```
+
+### **Migración Transparente**
+- Migración automática localStorage → Supabase
+- Cambio de fuente sin intervención del usuario
+- Indicador visual del estado de datos (desarrollo)
+
+---
+
+## 🚀 **Optimizaciones Implementadas**
+
+### **Arquitectura Limpia**
+- ✅ Eliminados archivos duplicados
+- ✅ Una sola instancia de Supabase
+- ✅ Componentes unificados
+- ✅ Dependencias optimizadas
+- ✅ Estructura de carpetas ordenada
+
+### **Performance**
+- ✅ Bundle splitting automático
+- ✅ Lazy loading de páginas
+- ✅ React memoization
+- ✅ Tailwind CSS purging
+- ✅ Imágenes optimizadas
+
+### **Warnings Eliminados**
+- ✅ React Router future flags configurados
+- ✅ Una sola instancia de GoTrueClient
+- ✅ Renderizado único de la aplicación
+- ✅ Tipos TypeScript completos
+
+---
+
+## 🔧 **Configuración para Producción**
+
+### **Environment Variables**
+```env
+NODE_ENV=production
+VITE_SUPABASE_URL=<your-supabase-url>
+VITE_SUPABASE_ANON_KEY=<your-supabase-key>
+VITE_SUPABASE_SERVICE_KEY=<your-service-key>
+```
+
+### **Despliegue**
+```bash
+# Build optimizado
+npm run build:deploy
+
+# El dist/ resultante está listo para cualquier hosting
+```
+
+---
+
+## 📱 **Responsive Design**
+
+```css
+Mobile: < 768px    (Lista de eventos)
+Tablet: 768-1024px (Calendario compacto)
+Desktop: > 1024px  (Calendario 3D completo)
+```
+
+---
+
+## 🔐 **Autenticación y Roles**
+
+- **Usuario**: Puede ver contenido y enviar sugerencias
+- **Moderador**: Puede aprobar contenido
+- **Admin**: Control total del sistema
+
+---
+
+## 🎨 **Componentes 3D Incluidos**
+
+- **Calendar3D**: Calendario principal con efectos visuales
+- **FloatingElements**: Partículas animadas de fondo
+- **HolographicCard**: Tarjetas con efecto holográfico
+- **NeonButton**: Botones con efectos neón
+
+---
+
+## 📊 **Analytics Integrados**
+
+- Vercel Analytics para métricas de uso
+- Speed Insights para rendimiento
+- Tracking de eventos personalizado
+
+---
+
+## 🚀 **Próximas Mejoras**
+
+- [ ] PWA (Progressive Web App)
+- [ ] Notificaciones push
+- [ ] Modo offline
+- [ ] Integración con redes sociales
+- [ ] API pública para terceros
+
+---
+
+**Desarrollado con ❤️ para la escena electrónica de Ibiza**
